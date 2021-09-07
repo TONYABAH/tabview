@@ -1035,7 +1035,8 @@ export default class TabView {
       const result = before();
       if (result === false) return false;
     }
-    this.tabs.values.forEach((tab) => {
+    // this.tabs.values().forEach((tab) => {
+    for (const tab of this.tabs.values()) {
       if (tab.linkButton.id === linkButton.id) {
         tab.selected = true;
         this.tab = tab;
@@ -1044,7 +1045,7 @@ export default class TabView {
         tab.selected = false;
         document.getElementById(tab.pageId).style.visibility = "hidden";
       }
-    });
+    }
 
     this.applySelection(linkButton);
     if (!this.isLinkVisible(linkButton)) {
