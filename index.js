@@ -960,7 +960,12 @@ export default class TabView {
 
     this.settings = Object.assign(settings, options);
 
-    var page = this.createPage(this.settings.target, tabId, buttonId, this.settings);
+    var page = this.createPage(
+      this.settings.target,
+      tabId,
+      buttonId,
+      this.settings
+    );
 
     this.getTabPagePanel().appendChild(page);
 
@@ -1030,7 +1035,7 @@ export default class TabView {
       const result = before();
       if (result === false) return false;
     }
-    this.tabs.forEach((tab) => {
+    this.tabs.values.forEach((tab) => {
       if (tab.linkButton.id === linkButton.id) {
         tab.selected = true;
         this.tab = tab;
