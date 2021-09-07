@@ -2,7 +2,7 @@
   "name": "tabview",
   "version": "1.0.0",
   "description": "Scrollable tabs",
-  "main": "./lib/tabview.js",
+  "main": "lib/tabview.js",
   "module": "lib/tabview.modern.js",
   "source": "index.js",
   "files": [
