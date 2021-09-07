@@ -1,0 +1,33 @@
+{
+  "name": "tabview",
+  "version": "1.0.0",
+  "description": "Scrollable tabs",
+  "main": "./lib/tabview.js",
+  "module": "lib/tabview.modern.js",
+  "source": "index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "microbundle --name TabView -o dist -f iife,umd",
+    "dev": "microbundle --name TabView -o lib --no-compress",
+    "start": "npm run dev && npm run serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TONYABAH/tabview.git"
+  },
+  "keywords": [
+    "Scriollable",
+    "tabs"
+  ],
+  "author": "Tony Abah <tonyarmyabah@gmail.com> (https://github.com/TONYABAH)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TONYABAH/tabview/issues"
+  },
+  "homepage": "https://github.com/TONYABAH/tabview#readme",
+  "devDependencies": {
+    "microbundle": "^0.13.0"
+  }
+}
