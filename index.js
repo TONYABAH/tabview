@@ -132,8 +132,6 @@ const TabView = (function () {
         linkButton.style.color = "inherit";
         linkButton.style.cursor = "pointer";
         linkButton.style.display = "block";
-        // linkButton.style.width = "128px";
-        // linkButton.style.textAlign = "left";
         linkButton.style.transition = "background .4s";
         if (style) {
             linkButton.style.borderRadius = "8px 1px 0px 0px";
@@ -262,16 +260,6 @@ const TabView = (function () {
         labelContainer.style.color = "inherit";
         labelContainer.style.background = "transparent";
         labelContainer.style.cursor = "pointer";
-        // const img = createImage(options);
-        // var closeBtn = createCloseButton();
-        // var label = createLabel(options.label, options.title);
-        // if (!options.closable) {
-        //  closeBtn.style.display = "none";
-        // labelContainer.style.paddingRight = "7px";
-        // }
-        // labelContainer.append(img);
-        // labelContainer.append(label);
-        // labelContainer.append(closeBtn);
 
         return labelContainer;
     }
