@@ -2,11 +2,14 @@
   "name": "tabview",
   "version": "1.0.0",
   "description": "Scrollable tabs",
-  "main": "lib/tabview.js",
-  "module": "index.js",
+  "main": "dist/tabview.js",
+  "umd:main": "dist/tabview.umd.js",
+  "module": "lib/tabview.modern.js",
+  "unpkg": "dist/tabview.umd.js",
   "source": "index.js",
   "files": [
-    "dist"
+    "dist",
+    "lib"
   ],
   "scripts": {
     "build": "microbundle --name TabView -o dist -f iife,umd",
