@@ -32,7 +32,7 @@ Scrollable tabs with close buttons
 * randomId() - generates a random string identifier
 * Emitter() - Event emitter
 * Events() - Custom Event
-> The Tab Object returned by view.add has the following methods:
+> The Tabs Object returned by view.add has the following methods:
 * add(options) - adds a tab to the tabs and returns the new tab
 * close(tabId) - close the tab with given id
 * select(tabId) - select tab with given id
@@ -41,9 +41,7 @@ Scrollable tabs with close buttons
 * onClose - Trigger when  a tab closed
 * onSelect - Trigger when a tab is selected
 * onDestroy - Trigger when tabs is destroyed
-
-
-* 
+ 
 
   
 
