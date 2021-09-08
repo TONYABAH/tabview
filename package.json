@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "description": "Scrollable tabs",
   "main": "lib/tabview.js",
-  "module": "lib/tabview.modern.js",
+  "module": "index.js",
   "source": "index.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "microbundle --name TabView -o dist -f iife,umd",
-    "dev": "microbundle --name TabView -o lib --no-compress",
+    "dev": "microbundle --name TabView -o lib --no-compress --watch",
+    "serve": " browser-sync start --server --serveStatic demo --index demo/index.html -w -f .",
     "start": "npm run dev && npm run serve"
   },
   "repository": {

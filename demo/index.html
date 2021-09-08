@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exprt Rules&trade;</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--<link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="scrollbars.css">-->
+        <style>
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background-color: rgb(9, 117, 9);
+                border-top: 1px solid #777;
+                color: white;
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                text-shadow: 1px 1px 1px #333;
+            }
+            .main {
+                border: 1px solid rgb(152, 250, 6);
+                left: 4px;
+                right: 4px;
+                top: 55px;
+                bottom: 68px;
+                position: absolute;
+                text-shadow: none;
+            }
+            .row {
+                background-color: antiquewhite;
+            }
+            button {
+                color: white;
+                background-color: rgb(185, 135, 7);
+                border: 1px 1px solid rgb(163, 139, 4);
+                padding: 16px 16px;
+                font-size: 2em;
+                font-weight: 700;
+                cursor: pointer;
+                position: absolute;
+                bottom: 0;
+                height: 67px;
+                left: 0;
+                float: right;
+                font-variant: small-caps;
+            }
+            .addBtn {
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <div class="header">
+            <h3>Rules Expert System&trade;</h3>
+        </div>
+
+        <!-- The flexible grid (content) -->
+        <div class="main" id="tabs"></div>
+        <div class="row">
+            <button id="addTab" class="addBtn">Add new tab</button>
+        </div>
+        <script type="module" src="./demo.js"></script>
+        <script id="__bs_script__">
+            //<![CDATA[
+            document.write(
+                "<script async src='http://localhost:3000/browser-sync/browser-sync-client.js?v=2.26.14'><\/script>".replace(
+                    "HOST",
+                    location.hostname
+                )
+            );
+            //]]>
+        </script>
+    </body>
+</html>
