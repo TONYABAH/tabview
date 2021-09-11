@@ -105,11 +105,7 @@ const TabView = (function () {
         };
     })();
 
-    function createTabButton(
-        linkId,
-        tabId,
-        { target, fancy, title, bg, data }
-    ) {
+    function createTabButton(linkId, tabId, { target, fancy, title, bg }) {
         const tabBtn = document.createElement('button');
         tabBtn.className = 'tab-link';
         tabBtn.setAttribute('href', '#!');
@@ -134,17 +130,15 @@ const TabView = (function () {
         tabBtn.style.cursor = 'pointer';
         tabBtn.style.display = 'block';
         tabBtn.style.transition = 'background .4s';
-        if (style) {
+        if (fancy) {
             tabBtn.style.borderRadius = '8px 1px 0px 0px';
         } else {
             tabBtn.style.borderRadius = '1px 1px 0px 0px';
         }
-        tabBtn.addEventListener('click', () => {
-            select(tabId);
-        });
+
         return tabBtn;
     }
-    function createCloseButton(tabId) {
+    function createCloseButton() {
         const closeBtn = document.createElement('a');
         closeBtn.innerHTML = '&times';
         closeBtn.setAttribute('name', 'close-button');
@@ -169,10 +163,7 @@ const TabView = (function () {
         closeBtn.addEventListener('mouseleave', () => {
             closeBtn.style.background = '';
         });
-        closeBtn.addEventListener('click', (e) => {
-            close(tabId); // linkButton.getAttribute("data-tab"));
-            e.stopImmediatePropagation();
-        });
+
         return closeBtn;
     }
     function createLabel(text, title) {
@@ -228,11 +219,12 @@ const TabView = (function () {
         const btn = document.createElement('button');
         btn.id = randomId();
         btn.setAttribute('name', name);
+        btn.style.position = 'relative';
         btn.style.height = '100%';
         btn.style.border = '0 none transparent';
         btn.style.background = 'transparent';
         btn.style.color = 'white';
-        btn.marginRight = btn.marginLeft = '2px';
+        btn.style.marginRight = btn.style.marginLeft = '2px';
         btn.style.padding = '2px';
         btn.style.paddingLeft = btn.style.paddingRight = '7px';
         btn.style.cursor = 'pointer';
@@ -240,8 +232,8 @@ const TabView = (function () {
         btn.style.fontSize = '14px';
         btn.style.float = float || 'none';
         btn.style.outline = 'none';
-        btn.innerHTML = text;
         btn.style.borderRadius = '4px 4px';
+        btn.innerHTML = text;
         return btn;
     }
     function createImage(options) {
@@ -474,12 +466,8 @@ const TabView = (function () {
         return banner;
     }
     function mountTab(el, doc, tabPagePanel) {
-        const container =
-            typeof el === 'object' ? el : document.getElementById(el);
-        containerId = container.id;
-
+        // const container = typeof el === 'object' ? el : document.getElementById(el);
         container.appendChild(tabPagePanel);
-
         const tabbar = doc.querySelector('div');
         let banner;
         let footer;
@@ -544,20 +532,17 @@ const TabView = (function () {
         let rightBtn;
         let leftBtn;
         let addBtn;
-        let leftNavId;
-        let rightNavId;
         let pagePanelId;
-        let addBtnId;
         let tabBarId;
         let themeOptions;
         let tabSettings;
-        let containerId;
+        let container;
         let tabButtonsCount;
         let dragStartPoint;
         let dragStopPoint;
-        const links = {};
         const tabs = new Map();
         const buttons = {};
+        const links = {};
         const pages = {};
         const hiddenTabs = [];
 
@@ -569,6 +554,10 @@ const TabView = (function () {
          * @returns void
          */
         function init(el, options) {
+            container =
+                typeof el === 'object' && el instanceof HTMLElement
+                    ? el
+                    : document.getElementById(el);
             themeOptions = options;
             const data = options.loadFromMarkup ? loadFromMarkup(el) : null;
             if (data) {
@@ -576,48 +565,39 @@ const TabView = (function () {
             }
             applySettings(themeOptions);
             leftBtn = createButton('left-nav-button', '&lt;', 'left');
-            leftBtn.addEventListener('click', () => {
+            // leftNavId = leftBtn.id;
+            leftBtn.addEventListener('mousedown', () => {
                 scroll(false);
             });
 
-            leftNavId = leftBtn.id;
             addBtn = createButton('add-tab-button', '+', 'left');
-            addBtnId = addBtn.id;
+            // addBtnId = addBtn.id;
             if (themeOptions.add) {
                 addBtn.style.visibility = 'visible';
             } else {
                 addBtn.style.visibility = 'hidden';
             }
-            addBtn.addEventListener('click', () => {
+            addBtn.addEventListener('mousedown', () => {
                 Event.fire('add-tab-click', randomId());
             });
             tabBar = createBar();
+            tabBarId = tabBar.id;
+
             const tabBarWraper = createTabBarWraper();
             tabBarWraper.append(tabBar);
             tabBarWraper.appendChild(leftBtn);
             tabBarWraper.appendChild(addBtn);
-            tabBarId = tabBar.id;
-
+            /////tabBarWraper.style.background = 'purple';
             rightBtn = createButton('right-nav-button', '&gt;', 'right');
-            // rightBtn = rightBtn;
-            tabBarWraper.appendChild(rightBtn);
-            rightBtn.addEventListener('click', () => {
+            rightBtn.addEventListener('mousedown', () => {
                 scroll(true);
             });
-            // tabBarWraper.appendChild(rightBtn);
-            rightNavId = rightBtn.id;
+            tabBarWraper.appendChild(rightBtn);
             const pagePanel = createPagePanel();
             pagePanelId = pagePanel.id;
-            // let tabbar= doc.querySelector('div');
-            const doc = createTable(
-                tabBar.parentElement,
-                pagePanel,
-                themeOptions
-            );
-            const container =
-                typeof el === 'object' ? el : document.getElementById(el);
-            containerId = container.id;
-            container.append(doc);
+            const layout = createTable(tabBarWraper, pagePanel, themeOptions);
+
+            container.append(layout);
             setTheme(themeOptions.theme);
             attachDomEventListeners(this);
             if (themeOptions.tabs) {
@@ -625,6 +605,7 @@ const TabView = (function () {
             }
             toggleNavigator(getLeftNavButton(), false);
             toggleNavigator(getRightNavButton(), false);
+            ///////rightBtn.style.visibility = 'visible';
         }
 
         function getTabAtIndex(index) {
@@ -658,7 +639,6 @@ const TabView = (function () {
         }
 
         function attachDomEventListeners() {
-            // let self = this
             const tabBar = getTabBar();
             window.addEventListener('resize', () => {
                 debounce(() => {
@@ -670,7 +650,7 @@ const TabView = (function () {
                         scrollLinkIntoView(selectedTab.linkButton);
                     }
                     showHideNavButton();
-                }, 200)();
+                }, 200);
             });
 
             tabBar.addEventListener(
@@ -737,7 +717,7 @@ const TabView = (function () {
         function showHideNavButton() {
             // console.log(settings);
             if (themeOptions.infiniteScroll) {
-                return;
+                // return;
             }
             const visibleButtons = getVisibleTabs();
             const firstVisibleButton = visibleButtons[0];
@@ -970,7 +950,7 @@ const TabView = (function () {
         }
 
         function getContainer() {
-            return document.getElementById(containerId);
+            return container; // document.getElementById(containerId);
         }
         function hideExtraTabs() {
             const links = Object.values(links);
@@ -1019,7 +999,7 @@ const TabView = (function () {
             }
             // target.parentNode.insertBefore(dataEl,dragStartPoint>dragStopPoint?target:target.nextSibling);
         }
-        function add(options = {}) {
+        function getSettings(options) {
             const { length } = Object.keys(buttons);
             const tabId = options.tabId || randomId();
             const buttonId = `tab-btn-${tabId}`;
@@ -1028,6 +1008,7 @@ const TabView = (function () {
             const title = options.title || tabLabel;
 
             const settings = {
+                tabId,
                 buttonId,
                 target,
                 label: tabLabel,
@@ -1040,24 +1021,31 @@ const TabView = (function () {
                 color: options.color || 'inherit',
                 fancy: themeOptions.fancy,
             };
-            // options.bg = options.bg === "transparent" ? "" : options.bg;
-            // if (options.buttonId === null) {
-            // delete options.buttonId;
-            // }
-            const tabSettings = Object.assign(settings, options);
+            return Object.assign(settings, options);
+        }
+        function handleTabClick(e) {
+            e.stopImmediatePropagation();
+            select(this);
+        }
+        function add(options = {}) {
+            const tabSettings = getSettings(options); // Object.assign(getSettings(options), options);
             const page = createPage(
                 tabSettings.target,
-                tabId,
-                buttonId,
+                tabSettings.tabId,
+                tabSettings.buttonId,
                 tabSettings
             );
 
             getTabPagePanel().appendChild(page);
-            const tabBtn = createTabButton(buttonId, tabId, tabSettings);
+            const tabBtn = createTabButton(
+                tabSettings.buttonId,
+                tabSettings.tabId,
+                tabSettings
+            );
             const labelContainer = createLabelContainer(tabSettings);
             const img = createImage(tabSettings);
             const label = createLabel(tabSettings.label, tabSettings.title);
-            const closeBtn = createCloseButton(tabId);
+            const closeBtn = createCloseButton(tabSettings.tabId);
 
             if (!tabSettings.closable) {
                 closeBtn.style.display = 'none';
@@ -1067,17 +1055,19 @@ const TabView = (function () {
             labelContainer.append(label);
             labelContainer.append(closeBtn);
             tabBtn.append(labelContainer);
-
+            tabBtn.addEventListener('mouseup', handleTabClick);
             tabBtn.addEventListener('mouseenter', () => {
                 if (selectedTab.linkButton.id === tabBtn.id) return;
                 closeBtn.style.visibility = 'visible';
             });
-
             tabBtn.addEventListener('mouseleave', () => {
                 if (selectedTab.linkButton.id === tabBtn.id) return;
                 closeBtn.style.visibility = 'hidden';
             });
-
+            closeBtn.addEventListener('mousedown', (e) => {
+                close(tabSettings.tabId); // linkButton.getAttribute("data-tab"));
+                e.stopImmediatePropagation();
+            });
             buttons[tabBtn.id] = tabBtn;
             // If there was a selected button already, insert after it
             // otherwise append at the end of tab list
@@ -1088,19 +1078,19 @@ const TabView = (function () {
             } else {
                 getTabBar().appendChild(tabBtn);
             }
-            tabs.set(tabId, {
-                id: tabId,
+            tabs.set(tabSettings.tabId, {
+                id: tabSettings.tabId,
                 label: tabSettings.label,
                 text: tabSettings.text,
                 title: tabSettings.title,
                 linkId: tabSettings.buttonId,
                 pageId: tabSettings.target,
                 data: tabSettings.data,
-                selected: tabSettings.selected,
+                selected: tabSettings.buttonId,
                 linkButton: tabBtn,
                 page,
             });
-            selectedTab = tabs.get(tabId);
+            selectedTab = tabs.get(tabSettings.tabId);
             showHideNavButton();
             select(tabBtn);
             if (tabSettings.selected) {
@@ -1111,14 +1101,12 @@ const TabView = (function () {
 
         function select(ref, before) {
             let linkButton = null;
-            console.log(typeof ref);
-            console.log(ref instanceof HTMLElement);
             if (!ref) {
                 throw new Error('Invalid tab address:');
             } else if (typeof ref === 'string') {
                 const id = ref;
                 linkButton = getLinkButton(id);
-            } else if (ref.id) {
+            } else if (ref instanceof HTMLElement) {
                 const el = ref;
                 linkButton = el;
             } else {
@@ -1129,6 +1117,7 @@ const TabView = (function () {
                 const result = before();
                 if (result === false) return false;
             }
+
             for (const tab of tabs.values()) {
                 if (tab.linkButton.id === linkButton.id) {
                     tab.selected = true;
@@ -1155,14 +1144,9 @@ const TabView = (function () {
             return selectedTab;
         }
 
-        function close(el) {
-            let tabId = el;
-            if (!el) {
+        function close(tabId) {
+            if (!tabId) {
                 throw new Error('Invalid tab address:');
-            } else if (typeof id === 'string') {
-                // tab id
-            } else if (el.id) {
-                tabId = el.id; // .substr(5);//button Element
             }
             const tab = tabs.get(tabId);
             // console.log(el, tab, tabs);
@@ -1276,11 +1260,9 @@ const TabView = (function () {
         }
 
         function destroy() {
-            // destroy
-            removeListeners();
+            // removeListeners();
         }
         return {
-            init,
             add,
             close,
             setTheme,

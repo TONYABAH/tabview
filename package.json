@@ -12,8 +12,8 @@
     "lib"
   ],
   "scripts": {
-    "build": "microbundle --name TabView -o dist -f iife,umd",
-    "dev": "microbundle --name TabView -o lib --no-compress --watch",
+    "build": "microbundle --name TabView -o dist -f umd",
+    "dev": "microbundle --name TabView -o lib -f modern --no-compress --watch",
     "serve": " browser-sync start --server --serveStatic demo --index demo/index.html -w -f .",
     "start": "npm run dev && npm run serve",
     "lint": "eslint --fix .",
