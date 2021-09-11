@@ -1,14 +1,12 @@
 import Tabview from "../index.js";
-let container = document.getElementById("tabs");
-let addBtn = document.getElementById("addTab");
-let view = new Tabview();
-view.init(container, {
-    // theme: "purple",
-});
+
+const container = document.getElementById("tabs");
+const addBtn = document.getElementById("addTab");
+const view = Tabview.createTabs(container, { theme: "dark" });
 function add() {
-    let tab = view.add({
-        bg: "red",
-        text: "Welcome " + Math.random(),
+    const tab = view.add({
+        bg: "",
+        text: `Welcome ${  Math.random()}`,
     });
 }
 addBtn.addEventListener("click", () => {

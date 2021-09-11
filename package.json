@@ -12,10 +12,12 @@
     "lib"
   ],
   "scripts": {
-    "build": "microbundle --name TabView -o dist -f iife,umd",
-    "dev": "microbundle --name TabView -o lib --no-compress --watch",
+    "build": "microbundle --name TabView -o dist -f umd",
+    "dev": "microbundle --name TabView -o lib -f modern --no-compress --watch",
     "serve": " browser-sync start --server --serveStatic demo --index demo/index.html -w -f .",
-    "start": "npm run dev && npm run serve"
+    "start": "npm run dev && npm run serve",
+    "lint": "eslint --fix .",
+    "lint:fix": "eslint --fix ."
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,9 @@
   },
   "homepage": "https://github.com/TONYABAH/tabview#readme",
   "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-config-babel": "^9.0.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "microbundle": "^0.13.0"
   }
 }
