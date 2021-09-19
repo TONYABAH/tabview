@@ -46,7 +46,7 @@ const TabView = (function () {
         };
     })();
 
-    const Event = (function () {
+    const Event = function () {
         const _listeners = {};
         return {
             addListener(type, listener) {
@@ -103,7 +103,7 @@ const TabView = (function () {
                 this.removeListener(type, listener);
             },
         };
-    })();
+    };
 
     function createTabButton(linkId, tabId, { target, fancy, title, bg }) {
         const tabBtn = document.createElement('button');
@@ -527,6 +527,7 @@ const TabView = (function () {
     const createTabs = function (el, options) {
         const tabIndex = -1;
         const currentIndex = 0;
+        const customEvent = Event();
         let selectedTab;
         let tabBar;
         let rightBtn;
@@ -578,7 +579,7 @@ const TabView = (function () {
                 addBtn.style.visibility = 'hidden';
             }
             addBtn.addEventListener('mousedown', () => {
-                Event.fire('add-tab-click', randomId());
+                customEvent.fire('add-tab-click', randomId());
             });
             tabBar = createBar();
             tabBarId = tabBar.id;
@@ -1103,21 +1104,7 @@ const TabView = (function () {
             if (!tabId) {
                 throw new Error('Invalid tab address:');
             }
-            // let linkButton = getLinkButton(tabId);
-            /* else if (typeof ref === 'string') {
-                const id = ref;
-                linkButton = getLinkButton(id);
-            } else if (ref instanceof HTMLElement) {
-                const el = ref;
-                linkButton = el;
-            } else {
-                throw new Error('Invalid Button or ID');
-            }*/
 
-            /* if (typeof before === 'function') {
-                const result = before();
-                if (result === false) return false;
-            }*/
             if (selectedTab) {
                 document.getElementById(selectedTab.pageId).style.visibility =
                     'hidden';
@@ -1131,31 +1118,12 @@ const TabView = (function () {
             document.getElementById(tab.pageId).style.visibility = 'visible';
             tab.linkButton.lastChild.lastChild.style.visibility = 'visible';
             tab.selected = true;
-            // let linkButton = tab.linkButton;
-            /*for (let i=0; i < tabs.length; i++) {
-                let tab = tabs[i]
-                if (tab.id === tabId) {
-                    tab.selected = true;
-                    selectedTab = tab;
-                    document.getElementById(tab.pageId).style.visibility =
-                        'visible';
-                    tab.linkButton.lastChild.lastChild.style.visibility =
-                        'visible';
-                    // console.log(tab.linkButton.lastChild.lastChild);
-                } else {
-                    tab.selected = false;
-                    document.getElementById(tab.pageId).style.visibility =
-                        'hidden';
-                    tab.linkButton.lastChild.lastChild.style.visibility =
-                        'hidden';
-                }
-            }*/
             applySelection(tab.linkButton, tabSettings);
             if (!isLinkVisible(tab.linkButton)) {
                 scrollLinkIntoView(tab.linkButton);
             }
             selectedTab = tab;
-            Event.fire('select', selectedTab);
+            customEvent.fire('select', selectedTab);
 
             return selectedTab;
         }
@@ -1170,13 +1138,13 @@ const TabView = (function () {
             const link = tab.linkButton; // getLinkButton(tab.linkId);
             const next = link.nextSibling;
             const prev = link.previousSibling;
-            Event.fire('before_close', tab);
+            customEvent.fire('before_close', tab);
             link.remove();
             document.getElementById(tab.pageId).remove();
             selectedTab = null; // delete selectedTab;
             tabs.delete(tabId);
 
-            Event.fire('close', tab);
+            customEvent.fire('close', tab);
             if (next && next.getAttribute('data-tab')) {
                 select(next.getAttribute('data-tab'));
             } else if (prev && prev.getAttribute('data-tab')) {
@@ -1274,7 +1242,12 @@ const TabView = (function () {
                 }
             }
         }
-
+        function onSelect(fn) {
+            customEvent.addListener('select', fn);
+        }
+        function onClose(fn) {
+            customEvent.addListener('close', fn);
+        }
         function destroy() {
             // removeListeners();
             console.log('Tabs Destroyed');
@@ -1289,6 +1262,8 @@ const TabView = (function () {
             getTabs: () => tabs,
             setTheme,
             getTheme,
+            onSelect,
+            onClose,
             destroy,
         };
     };
