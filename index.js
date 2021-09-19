@@ -694,12 +694,12 @@ const TabView = (function () {
             switch (code) {
                 case 37:
                     if (link.previousSibling) {
-                        select(link.previousSibling);
+                        select(link.previousSibling.getAttribute('data-tab'));
                     }
                     break; // left key
                 case 39:
                     if (link.nextSibling) {
-                        select(link.nextSibling);
+                        select(link.nextSibling.getAttribute('data-tab'));
                     }
                     break; // right key
                 case 38:
@@ -1025,7 +1025,7 @@ const TabView = (function () {
         }
         function handleTabClick(e) {
             e.stopImmediatePropagation();
-            select(this);
+            select(this.getAttribute('data-tab'));
         }
         function add(options = {}) {
             const tabSettings = getSettings(options); // Object.assign(getSettings(options), options);
@@ -1092,18 +1092,19 @@ const TabView = (function () {
             });
             selectedTab = tabs.get(tabSettings.tabId);
             showHideNavButton();
-            select(tabBtn);
+            select(tabBtn.getAttribute('data-tab'));
             if (tabSettings.selected) {
                 return selectedTab;
             }
             return selectedTab;
         }
 
-        function select(ref, before) {
-            let linkButton = null;
-            if (!ref) {
+        function select(tabId) {
+            if (!tabId) {
                 throw new Error('Invalid tab address:');
-            } else if (typeof ref === 'string') {
+            }
+            // let linkButton = getLinkButton(tabId);
+            /* else if (typeof ref === 'string') {
                 const id = ref;
                 linkButton = getLinkButton(id);
             } else if (ref instanceof HTMLElement) {
@@ -1111,15 +1112,29 @@ const TabView = (function () {
                 linkButton = el;
             } else {
                 throw new Error('Invalid Button or ID');
-            }
+            }*/
 
-            if (typeof before === 'function') {
+            /* if (typeof before === 'function') {
                 const result = before();
                 if (result === false) return false;
+            }*/
+            if (selectedTab) {
+                document.getElementById(selectedTab.pageId).style.visibility =
+                    'hidden';
+                selectedTab.linkButton.lastChild.lastChild.style.visibility =
+                    'hidden';
+                selectedTab.selected = false;
             }
 
-            for (const tab of tabs.values()) {
-                if (tab.linkButton.id === linkButton.id) {
+            let tab = tabs.get(tabId);
+            // let tabPage = selectedTab.getAttribute('data-target');
+            document.getElementById(tab.pageId).style.visibility = 'visible';
+            tab.linkButton.lastChild.lastChild.style.visibility = 'visible';
+            tab.selected = true;
+            // let linkButton = tab.linkButton;
+            /*for (let i=0; i < tabs.length; i++) {
+                let tab = tabs[i]
+                if (tab.id === tabId) {
                     tab.selected = true;
                     selectedTab = tab;
                     document.getElementById(tab.pageId).style.visibility =
@@ -1134,11 +1149,12 @@ const TabView = (function () {
                     tab.linkButton.lastChild.lastChild.style.visibility =
                         'hidden';
                 }
+            }*/
+            applySelection(tab.linkButton, tabSettings);
+            if (!isLinkVisible(tab.linkButton)) {
+                scrollLinkIntoView(tab.linkButton);
             }
-            applySelection(linkButton, tabSettings);
-            if (!isLinkVisible(linkButton)) {
-                scrollLinkIntoView(linkButton);
-            }
+            selectedTab = tab;
             Event.fire('select', selectedTab);
 
             return selectedTab;
@@ -1161,10 +1177,10 @@ const TabView = (function () {
             tabs.delete(tabId);
 
             Event.fire('close', tab);
-            if (next && next.tagName === 'BUTTON') {
-                select(next);
-            } else if (prev && prev.tagName === 'BUTTON') {
-                select(prev);
+            if (next && next.getAttribute('data-tab')) {
+                select(next.getAttribute('data-tab'));
+            } else if (prev && prev.getAttribute('data-tab')) {
+                select(prev.getAttribute('data-tab'));
             }
             showHideNavigator();
             scroll(true);

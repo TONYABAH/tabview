@@ -5,8 +5,8 @@
 
 ## Directories
 log/
-## dist/
-## lib/
+dist/
+lib/
 node_modules/
 bower_components/
 
