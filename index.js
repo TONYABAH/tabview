@@ -51,9 +51,9 @@ const TabView = (function () {
         return {
             addListener(type, listener) {
                 if (typeof _listeners[type] === 'undefined') {
-                    this._listeners[type] = [];
+                    _listeners[type] = [];
                 }
-                this._listeners[type].push(listener);
+                _listeners[type].push(listener);
             },
             attach(type, listener) {
                 this.addListener(type, listener);
