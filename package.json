@@ -35,12 +35,11 @@
     "url": "https://github.com/TONYABAH/tabview/issues"
   },
   "homepage": "https://github.com/TONYABAH/tabview#readme",
-  "dependencies": {
-    "microbundle": "^0.13.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^7.28.0",
     "eslint-config-babel": "^9.0.0",
-    "eslint-plugin-prettier": "^4.0.0"
+    "eslint-plugin-prettier": "^4.0.0",
+    "microbundle": "^0.13.0"
   }
 }
