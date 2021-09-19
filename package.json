@@ -1,6 +1,6 @@
 {
   "name": "tabview",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Scrollable tabs",
   "main": "dist/tabview.js",
   "umd:main": "dist/tabview.umd.js",
