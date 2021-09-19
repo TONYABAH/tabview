@@ -1282,6 +1282,7 @@ const TabView = (function () {
         return {
             add,
             close,
+            select,
             getTab,
             getTabAtIndex,
             getSelectedTab,
