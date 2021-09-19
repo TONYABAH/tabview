@@ -13,10 +13,11 @@
   ],
   "scripts": {
     "build": "microbundle --name TabView -o dist -f umd",
+    "build:dev": "microbundle --name TabView -o lib -f modern --no-compress",
     "dev": "microbundle --name TabView -o lib -f modern --no-compress --watch",
     "serve": " browser-sync start --server --serveStatic demo --index demo/index.html -w -f .",
-    "start": "npm run dev && npm run serve",
-    "postinstall": "npm run dev && npm run build",
+    "start": "npm run build:dev && npm run serve",
+    "postinstall": "npm run build:dev && npm run build",
     "lint": "eslint --fix .",
     "lint:fix": "eslint --fix ."
   },
