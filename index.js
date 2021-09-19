@@ -1261,6 +1261,7 @@ const TabView = (function () {
 
         function destroy() {
             // removeListeners();
+            console.log('Tabs Destroyed');
         }
         return {
             add,
