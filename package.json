@@ -17,7 +17,6 @@
     "dev": "microbundle --name TabView -o lib -f modern --no-compress --watch",
     "serve": " browser-sync start --server --serveStatic demo --index demo/index.html -w -f .",
     "start": "npm run build:dev && npm run serve",
-    /*"postinstall": "npm run build:dev && npm run build",*/
     "lint": "eslint --fix .",
     "lint:fix": "eslint --fix ."
   },
