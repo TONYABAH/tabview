@@ -527,7 +527,7 @@ const TabView = (function () {
     const createTabs = function (el, options) {
         const tabIndex = -1;
         const currentIndex = 0;
-        const customEvent = Event();
+        const customEvent = new Event();
         let selectedTab;
         let tabBar;
         let rightBtn;
