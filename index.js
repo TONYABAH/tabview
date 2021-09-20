@@ -1154,7 +1154,6 @@ const TabView = (function () {
             scroll(true);
             return tabId;
         }
-
         function isLinkVisible(link) {
             const box = link.getBoundingClientRect();
             const tabbar = getTabBar();
@@ -1259,7 +1258,7 @@ const TabView = (function () {
             getTab,
             getTabAtIndex,
             getSelectedTab,
-            getTabs: () => tabs,
+            getTabs: () => selectedTab,
             setTheme,
             getTheme,
             onSelect,
