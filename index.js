@@ -1271,7 +1271,7 @@ const TabView = (function () {
             getTab,
             getTabAtIndex,
             getSelectedTab,
-            getTabs: () => selectedTab,
+            getTabs: () => tabs,
             setTheme,
             getTheme,
             onSelect,
