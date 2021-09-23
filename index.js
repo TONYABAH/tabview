@@ -129,7 +129,8 @@ const TabView = (function () {
         tabBtn.style.color = 'inherit';
         tabBtn.style.cursor = 'pointer';
         tabBtn.style.display = 'block';
-        tabBtn.style.transition = 'background .4s';
+        // tabBtn.style.transform = 'rotate(-5deg)';
+        tabBtn.style.transition = 'background .1s';
         if (fancy) {
             tabBtn.style.borderRadius = '8px 1px 0px 0px';
         } else {
@@ -145,7 +146,7 @@ const TabView = (function () {
         closeBtn.setAttribute('title', 'close');
         closeBtn.style.borderRadius = '50%';
         closeBtn.style.visibility = 'hidden';
-        closeBtn.style.height = closeBtn.style.width = '20px';
+        closeBtn.style.height = closeBtn.style.width = '16px';
         closeBtn.style.float = 'right';
         closeBtn.style.marginRight = '2px';
         closeBtn.style.marginLeft = '5px';
@@ -158,10 +159,10 @@ const TabView = (function () {
         closeBtn.style.fontWeight = '700';
         closeBtn.style.background = 'transparent';
         closeBtn.addEventListener('mouseenter', () => {
-            closeBtn.style.background = '#555';
+            closeBtn.style.color = 'red';
         });
         closeBtn.addEventListener('mouseleave', () => {
-            closeBtn.style.background = '';
+            closeBtn.style.color = '';
         });
 
         return closeBtn;
@@ -171,13 +172,14 @@ const TabView = (function () {
         label.setAttribute('name', 'tab-link-label');
         label.className = 'tab-link-label';
         label.style.margin = '0';
-        label.style.paddingRight = '2px';
+        label.style.paddingRight = '4px';
         label.style.paddingLeft = '2px';
         label.style.verticalAlign = 'middle';
-        label.style.padding = '0';
+        // label.style.padding = '0';
         label.style.color = 'inherit';
-        label.style.maxWidth = '80px';
+        label.style.maxWidth = '125px';
         label.style.overflow = 'hidden';
+        label.style.textOverflow = 'ellipse';
         label.style.whiteSpace = 'nowrap';
         label.style.background = '';
         label.style.cursor = 'pointer';
@@ -191,23 +193,25 @@ const TabView = (function () {
         const tabbarContainer = document.createElement('div');
         tabbarContainer.style.position = 'relative';
         tabbarContainer.style.height = '100%';
-        tabbarContainer.style.height = '100%';
+        // tabbarContainer.style.height = '100%';
         tabbarContainer.style.width = '100%';
         tabbarContainer.style.border = 'none';
-        tabbarContainer.style.padding = 'none';
+        tabbarContainer.style.padding = '0';
+        tabbarContainer.style.background = 'red';
         tabbarContainer.className = 'tabbar-wrapper';
         return tabbarContainer;
     }
-    function createBar() {
+    function createTabBar() {
         const tabBar = document.createElement('div');
         tabBar.setAttribute('id', randomId());
         tabBar.style.position = 'absolute';
+        // tabBar.style.width = '100%';
         tabBar.style.top = '0';
         tabBar.style.bottom = '0';
-        tabBar.style.left = '60px';
-        tabBar.style.right = '30px';
+        tabBar.style.left = '16px';
+        tabBar.style.right = '16px';
         tabBar.style.overflow = 'hidden';
-        tabBar.style.padding = '0px';
+        tabBar.style.padding = '1px';
         tabBar.style.margin = '0px';
         tabBar.style.paddingRight = '7px';
         tabBar.style.background = 'inherit';
@@ -224,9 +228,9 @@ const TabView = (function () {
         btn.style.border = '0 none transparent';
         btn.style.background = 'transparent';
         btn.style.color = 'white';
-        btn.style.marginRight = btn.style.marginLeft = '2px';
+        btn.style.marginRight = btn.style.marginLeft = '1px';
         btn.style.padding = '2px';
-        btn.style.paddingLeft = btn.style.paddingRight = '7px';
+        // btn.style.paddingLeft = btn.style.paddingRight = '2px';
         btn.style.cursor = 'pointer';
         btn.style.fontWeight = '900';
         btn.style.fontSize = '14px';
@@ -238,11 +242,12 @@ const TabView = (function () {
     }
     function createImage(options) {
         const img = document.createElement('span');
-        img.style.marginRight = '7px';
-        img.style.color = '#b00';
+        img.style.marginRight = '2px';
+        // img.style.color = '#b00';
         img.style.fontWeight = 'bold';
         img.innerHTML = options.icon || 'kb';
         img.style.float = 'left';
+        img.style.paddingLeft = '4px';
         return img;
     }
     function createLabelContainer(options) {
@@ -511,18 +516,20 @@ const TabView = (function () {
             return;
         }
         const tablinks = el.parentElement.children;
-        // console.log(el.parentElement.parentElement);
         for (let i = 0; i < tablinks.length; i++) {
             tablinks[i].classList.remove('active');
             tablinks[i].style.background = options.bg;
             tablinks[i].style.color = options.color;
             // tablinks[i].lastChild.lastChild.style.visibility = "hidden";
+            tablinks[i].style.boxShadow = '1px 1px 2px 1px #333';
+            // tablinks[i].style.margin = '';
         }
 
         el.classList.add('active');
         el.style.background = options.activeBg;
         el.style.color = options.activecolor;
-        // el.lastChild.lastChild.style.visibility = "visible";
+        el.style.boxShadow = '4px 4px 16px 2px #333';
+        // el.style.marginRight = '1px';
     }
     const createTabs = function (el, options) {
         const tabIndex = -1;
@@ -530,6 +537,7 @@ const TabView = (function () {
         const customEvent = new Event();
         let selectedTab;
         let tabBar;
+        let tabBarWraper;
         let rightBtn;
         let leftBtn;
         let addBtn;
@@ -581,13 +589,13 @@ const TabView = (function () {
             addBtn.addEventListener('mousedown', () => {
                 customEvent.fire('add-tab-click', randomId());
             });
-            tabBar = createBar();
+            tabBar = createTabBar();
             tabBarId = tabBar.id;
 
-            const tabBarWraper = createTabBarWraper();
-            tabBarWraper.append(tabBar);
+            tabBarWraper = createTabBarWraper();
             tabBarWraper.appendChild(leftBtn);
-            tabBarWraper.appendChild(addBtn);
+            tabBarWraper.append(tabBar);
+            // tabBarWraper.appendChild(addBtn);
             /////tabBarWraper.style.background = 'purple';
             rightBtn = createButton('right-nav-button', '&gt;', 'right');
             rightBtn.addEventListener('mousedown', () => {
@@ -650,7 +658,8 @@ const TabView = (function () {
                         unhide();
                         scrollLinkIntoView(selectedTab.linkButton);
                     }
-                    showHideNavButton();
+                    // showHideNavButton();
+                    showHideNavigator();
                 }, 200);
             });
 
@@ -714,7 +723,23 @@ const TabView = (function () {
                     break;
             }
         }
+        function showHideNavigator() {
+            const visibleButtons = getVisibleTabs();
+            const firstVisibleButton = visibleButtons[0];
+            const lastVisibleButton = visibleButtons[visibleButtons.length - 1];
 
+            if (!firstVisibleButton) return;
+            if (firstVisibleButton.previousSibling) {
+                toggleNavigator(getLeftNavButton(), true);
+            } else {
+                toggleNavigator(getLeftNavButton(), false);
+            }
+            if (lastVisibleButton.nextSibling) {
+                toggleNavigator(getRightNavButton(), true);
+            } else {
+                toggleNavigator(getRightNavButton(), false);
+            }
+        }
         function showHideNavButton() {
             // console.log(settings);
             if (themeOptions.infiniteScroll) {
@@ -741,46 +766,31 @@ const TabView = (function () {
 
         function toggleNavButton(el, show) {
             if (show) {
-                el.style.visibility = 'visible';
+                // el.style.visibility = 'visible';
+                el.style.display = 'block';
             } else {
-                el.style.visibility = 'hidden';
+                // el.style.visibility = 'hidden';
+                el.style.display = 'none';
             }
         }
 
         function toggleAddButton(show) {
             if (show) {
-                getAddButton().style.visibility = 'visible';
+                getAddButton().style.display = 'block';
             } else {
-                getAddButton().style.visibility = 'hidden';
-            }
-        }
-
-        function showHideNavigator() {
-            const visibleButtons = getVisibleTabs();
-            const firstVisibleButton = visibleButtons[0];
-            const lastVisibleButton = visibleButtons[visibleButtons.length - 1];
-
-            if (!firstVisibleButton) return;
-            if (firstVisibleButton.previousSibling) {
-                toggleNavigator(getLeftNavButton(), true);
-            } else {
-                toggleNavigator(getLeftNavButton(), false);
-            }
-            if (lastVisibleButton.nextSibling) {
-                toggleNavigator(getRightNavButton(), true);
-            } else {
-                toggleNavigator(getRightNavButton(), false);
+                getAddButton().style.display = 'none';
             }
         }
 
         function applyTheme(options) {
             const table = getContainer().querySelector('table');
-            table.style.background = options.bg;
+            table.style.background = '';
             table.style.color = options.color;
             leftBtn.style.color =
                 rightBtn.style.color =
                 addBtn.style.color =
                     options.color;
+            tabBarWraper.style.background = options.activeBg;
         }
 
         // Public API
@@ -790,19 +800,19 @@ const TabView = (function () {
          */
         function setTheme(theme) {
             let color = '#ddd';
-            let bg = '#222';
+            let bg = '#4486a3';
             let activecolor = '#ddd';
-            let activeBg = '#003355';
+            let activeBg = '#4476a3';
             switch (theme) {
                 case 'dark':
-                    bg = '#002255';
-                    activeBg = '#003355';
-                    color = '#fff';
+                    // bg = '#002255';
+                    // activeBg = '#003355';
+                    // color = '#fff';
                     break;
                 case 'black':
-                    bg = '#111';
-                    activeBg = '#333';
-                    color = '#fff';
+                    // bg = '#111';
+                    // activeBg = '#333';
+                    // color = '#fff';
                     break;
                 case 'blue':
                     bg = 'rgba(8, 68, 117, 1)';
@@ -842,9 +852,11 @@ const TabView = (function () {
 
         function toggleNavigator(el, show) {
             if (show) {
-                el.style.visibility = 'visible';
+                //el.style.visibility = 'visible';
+                el.style.display = 'block';
             } else {
-                el.style.visibility = 'hidden';
+                // el.style.visibility = 'hidden';
+                el.style.display = 'none';
             }
         }
 
@@ -874,8 +886,6 @@ const TabView = (function () {
                 infiniteScroll: false,
                 fancy: false,
                 add: false,
-                // width   : '100%',
-                // height  : '100%',
                 theme: '',
                 tabHeight: 32,
                 leftTooltip: '&lt;',
@@ -1057,17 +1067,19 @@ const TabView = (function () {
             labelContainer.append(closeBtn);
             tabBtn.append(labelContainer);
             tabBtn.addEventListener('mouseup', handleTabClick);
-            tabBtn.addEventListener('mouseenter', () => {
+            tabBtn.addEventListener('mouseenter', (e) => {
+                e.stopPropagation();
                 if (selectedTab.linkButton.id === tabBtn.id) return;
                 closeBtn.style.visibility = 'visible';
             });
-            tabBtn.addEventListener('mouseleave', () => {
+            tabBtn.addEventListener('mouseleave', (e) => {
+                e.stopPropagation();
                 if (selectedTab.linkButton.id === tabBtn.id) return;
                 closeBtn.style.visibility = 'hidden';
             });
             closeBtn.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
                 close(tabSettings.tabId); // linkButton.getAttribute("data-tab"));
-                e.stopImmediatePropagation();
             });
             buttons[tabBtn.id] = tabBtn;
             // If there was a selected button already, insert after it
@@ -1150,8 +1162,9 @@ const TabView = (function () {
             } else if (prev && prev.getAttribute('data-tab')) {
                 select(prev.getAttribute('data-tab'));
             }
+            // showHideNavButton();
             showHideNavigator();
-            scroll(true);
+            scroll();
             return tabId;
         }
         function isLinkVisible(link) {
