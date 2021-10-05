@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tabview Demo&trade;</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--<link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="scrollbars.css">-->
+        <style>
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                border-top: 1px solid #777;
+                padding: 4px;
+                margin: 0px;
+                /* background-color: rgb(9, 117, 9);*/
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                text-shadow: 1px 1px 1px #333;
+            }
+            .main {
+                position: absolute;
+                left: 4px;
+                right: 4px;
+                top: 55px;
+                bottom: 68px;
+                display: block;
+                text-shadow: none;
+                /*background-color: darkcyan;*/
+            }
+            .row {
+                background-color: antiquewhite;
+            }
+            .row button {
+                color: white;
+                background-color: rgb(224, 163, 7);
+                border: 1px 1px solid rgb(163, 140, 8);
+                padding: 16px 16px;
+                font-size: 2em;
+                font-weight: 700;
+                cursor: pointer;
+                position: absolute;
+                bottom: 0;
+                height: 67px;
+                left: 0;
+                float: right;
+                font-variant: small-caps;
+            }
+            .addBtn {
+                width: 100%;
+            }
+            .tab-panel {
+                background: white;
+                position: absolute;
+                left: 0px;
+                right: 0px;
+                top: 55px;
+                bottom: 68px;
+                display: block;
+            }
+            .header {
+                color: ivory;
+                text-shadow: 1px 1px #333;
+                padding-left: 6px;
+            }
+        </style>
+        <script type="module">
+            import Tabview from './lib/tabview.modern.js';
+            // const container = document.getElementById('tabs');
+            const addBtn = document.getElementById('addTab');
+            const view = Tabview.createTabs('tabview', {
+                theme: '',
+                draggable: true,
+                align: 'top',
+                minTabWidth: 125,
+                tabHeight: 36,
+                footer: 'Copyright 2021 Ampani Inc.',
+            });
+            function add() {
+                let id = Math.random().toString(36).substr(2);
+                const tab = view.addTab(id, {
+                    text: `${id}`,
+                    labeL: 'Welcome ' + id,
+                    closable: true,
+                    iconcolor: 'red',
+                });
+            }
+            addBtn.addEventListener('click', () => {
+                add();
+            });
+        </script>
+    </head>
+    <body>
+        <!-- Header -->
+        <div class="header">
+            <h3>Tabview Demo</h3>
+        </div>
+        <div class="main">
+            <div id="tabview" class="tab-align-top rotate-tabs draggable">
+                <!--<div class="tab-header">Header: Programmable Tabs</div>-->
+                <div class="tabs">
+                    <button
+                        id="tab1"
+                        role="tab-button"
+                        closable="true"
+                        iconColor="red"
+                        icon=""
+                    >
+                        First tab
+                    </button>
+                    <button id="tab2" role="tab-button" closable="true" icon="">
+                        Second tab with longest name and clipped.
+                    </button>
+                    <button id="tab3" role="tab-button" closable="true" icon="">
+                        Third tab
+                    </button>
+                    <button id="tab4" role="tab-button" closable="true" icon="">
+                        Fourth tab
+                    </button>
+                    <button id="tab5" role="tab-button" closable="true" icon="">
+                        Fifth tab
+                    </button>
+                    <button id="tab6" role="tab-button" closable="true" icon="">
+                        Sixth tab
+                    </button>
+                </div>
+                <div class="tab-panel"></div>
+                <!--<div class="tab-footer">Footer: Copyright Ampani Inc 2021</div>-->
+            </div>
+        </div>
+        <div class="row">
+            <!-- The flexible grid (content) -->
+            <button id="addTab" class="addBtn">Add tab</button>
+        </div>
+        <script type="module" src="demo.js"></script>
+        <script id="__bs_script__">
+            //<![CDATA[
+            document.write(
+                "<script async src='http://localhost:3000/browser-sync/browser-sync-client.js?v=2.26.14'><\/script>".replace(
+                    'HOST',
+                    location.hostname
+                )
+            );
+            //]]>
+        </script>
+    </body>
+</html>

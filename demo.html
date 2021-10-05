@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Programmable Tabview Demo&trade;</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--<link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="scrollbars.css">-->
+        <style>
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 4px;
+                overflow: hidden;
+                border-top: 1px solid #777;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                text-shadow: 1px 1px 1px #333;
+            }
+            .main {
+                border: 1px solid rgb(9, 117, 9);
+                left: 4px;
+                right: 4px;
+                top: 4px;
+                bottom: 4px;
+                position: absolute;
+                text-shadow: none;
+            }
+        </style>
+        <script type="module">
+            import Tabview from './index.js';
+            Tabview.createTabs('tabview-container', {
+                theme: 'green',
+                footer: 'Copyright 2021 Ampani Inc.',
+                minTabWidth: 'auto',
+                // align: 'left',
+            });
+        </script>
+    </head>
+    <script>
+        const applyCSS = (options = {}) => {
+            const css = `
+             :root {
+                --min-tab-height: 22px;
+                --max-tab-width: 225px;
+                --min-tab-width: 60px;
+                --tab-width: 125px;
+                --tab-height: 35px;
+                --footer-height: 22px;
+                --header-height: 24px;
+                --panel-top: calc(var(--tab-height) + var(--header-height));
+                --panel-bottom: var(--footer-height);
+
+                --container-bg: rgb(231, 240, 248);
+                --tab-bar-bg: rgb(166, 208, 250);
+                --tab-bar-border-color: '';
+
+                --tab-bg: '';
+                --tab-color: '';
+                --tab-border-color: '';
+
+                --hover-bg: '';
+                --hover-color: '';
+
+                --active-bg: rgb(91, 154, 218);
+                --active-color: '';
+
+                --page-bg: '';
+                --page-color: '';
+                --page-border-color: '';
+
+                --tab-header-bg: '';
+                --tab-footer-bg: '';
+
+                --display-header: flex;
+                --display-footer: flex;
+            }
+             /**Layout CSS **/
+            .tabview-container {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                overflow: auto;
+            }
+            .tab-header {
+                height: var(--header-height);
+                padding-left: 14px;
+                display: var(--display-header);
+                border-bottom: 1px solid red;
+            }
+            .tab-footer {
+                position: absolute;
+                height: var(--footer-height);
+                right: 0;
+                bottom: 0;
+                left: 0;
+                border-top: 1px solid;
+                display: var(--display-footer);
+            }
+
+            .tab-bar {
+                position: absolute;
+                top: var(--header-height);
+                height: var(--tab-height);
+                min-height: var(--min-tab-height);
+                left: 0px;
+                right: 0px;
+                box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.15);
+                overflow: auto;
+                z-index: 0;
+            }
+            .tabs {
+                position: absolute;
+                left: 24px;
+                right: 24px;
+                height: 100%;
+                overflow: hidden;
+                display: flex;
+                white-space: nowrap;
+            }
+            .tabs > button {
+                position: relative;
+                min-height: 100%;
+                margin-left: 0px;
+                max-width: var(--max-tab-width);
+                min-width: var(--min-tab-width);
+                width: auto;
+                padding-left: 20px;
+                padding-right: 28px;
+                transition: 0.8s;
+                background: inherit;
+                border: none;
+                cursor: pointer;
+                display: block;
+                transition: all 0.6s;
+                transform-style: preserve-3d;
+                /*box-shadow: 0px 0px 1px 0px #333;*/
+                margin-left: 0px;
+                margin-right: 1px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            .tabs > button:hover {
+                background-color: rgb(199, 219, 230);
+                transform: all 0.6s;
+            }
+            .tabs > button.selected {
+                color: white;
+                background-color: var(--active-bg);
+                transform: all 0.4s;
+                border: 0px none transparent;
+                border-radius: 5px 5px 0 0;
+            }
+            .tabs > button > .close-button {
+                position: absolute;
+                width: 14px;
+                height: 14px;
+                padding: 0px;
+                margin-top: -3px;
+                margin-right: 2px;
+            }
+            .tabs > button > .close-button::after {
+                content: '✖';
+                border-radius: 50%;
+                padding-left: 2px;
+                padding-right: 2px;
+            }
+            .tab-icon {
+                position: absolute;
+                margin-top: -3px;
+            }
+            .tabs > button > .close-button:hover::after {
+                /*background-color: white;*/
+                color: red;
+            }
+            .tabs > button > .tab-label {
+                position: absolute;
+                display: flexbox;
+                left: 12px;
+                margin-right: 20px;
+                min-width: 120px;
+                top: 50%;
+                transform: translateY(-50%);
+                padding-top: 3px;
+                padding-left: 8px;
+                align-items: center;
+                overflow: hidden;
+                white-space: nowrap;
+                text-shadow: transparent;
+                text-overflow: ellipsis;
+                background-color: transparent;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+                    'Helvetica Neue', sans-serif;
+                font-size: 11px;
+                letter-spacing: 1px;
+            }
+
+            .left-nav-button,
+            .right-nav-button {
+                position: absolute;
+                width: 24px;
+                min-width: 24px;
+                max-width: 24px;
+                top: 0;
+                bottom: 0;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                /*text-shadow: 1px 1px #333;*/
+                text-align: center;
+                z-index: 0;
+            }
+            .right-nav-button {
+                right: 0;
+                padding-left: 4px;
+            }
+            .left-nav-button::after {
+                content: '';
+                min-width: 0;
+                max-width: 0;
+                width: 0;
+                height: 0;
+                min-height: 0;
+                max-height: 0;
+                height: 0;
+                border-right: 8px solid #333;
+                border-top: 8px solid transparent;
+                border-bottom: 8px solid transparent;
+            }
+            .right-nav-button::after {
+                content: '';
+                min-width: 0;
+                max-width: 0;
+                width: 0;
+                height: 0;
+                min-height: 0;
+                max-height: 0;
+                border-left: 8px solid #333;
+                border-top: 8px solid transparent;
+                border-bottom: 8px solid transparent;
+            }
+            .left-nav-button:hover {
+                color: cadetblue;
+            }
+            .right-nav-button:hover {
+                color: cadetblue;
+            }
+
+            .tab-panel {
+                position: absolute;
+                display: block;
+                top: var(--panel-top);
+                bottom: var(--footer-height);
+                right: 0;
+                left: 0;
+            }
+            .tab-panel .tab-page {
+                position: absolute;
+                display: none;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                z-index: auto;
+            }
+
+            /** Side tabs (Left or Right) CSS */
+            .tab-align-left .tab-header,
+            .tab-align-right .tab-header {
+                border-bottom: 1px solid;
+            }
+            .tab-align-right .tab-bar,
+            .tab-align-left .tab-bar {
+                position: absolute;
+                display: block;
+                min-width: 125px;
+                max-width: 125px;
+                top: calc(var(--header-height) + 1px);
+                bottom: var(--footer-height);
+                overflow: hidden;
+                text-align: center;
+                /*border-top: 1px solid;*/
+            }
+            .tab-align-right .tab-bar .tabs,
+            .tab-align-left .tab-bar .tabs {
+                position: absolute;
+                display: block;
+                height: auto;
+                left: 0;
+                right: 0;
+                top: 32px;
+                bottom: 32px;
+            }
+            .tab-align-right .left-nav-button,
+            .tab-align-right .right-nav-button,
+            .tab-align-left .left-nav-button,
+            .tab-align-left .right-nav-button {
+                position: relative;
+                display: block;
+                min-width: 125px;
+                max-height: 32px;
+                float: none;
+                height: var(--tab-height);
+                justify-content: center;
+                align-items: center;
+            }
+            .tab-align-right .tab-bar button,
+            .tab-align-left .tab-bar button {
+                position: block;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
+                min-height: var(--tab-height);
+                max-height: var(--tab-height);
+                height: var(--tab-height);
+                z-index: 1;
+                cursor: pointer;
+                border-bottom: 1px solid transparent;
+            }
+            /* .tab-align-right .tab-bar button > button,
+            .tab-align-left .tab-bar button > button {
+                position: absolute;
+                display: inline;
+                top: 50%;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+            }*/
+            .tab-align-right .right-nav-button,
+            .tab-align-left .right-nav-button {
+                position: absolute;
+                display: flex;
+                bottom: 0;
+                top: auto;
+                justify-content: center;
+                align-items: center;
+                z-index: 1;
+                border: 1px none;
+            }
+            .tab-align-right .left-nav-button,
+            .tab-align-left .left-nav-button {
+                position: sticky;
+                top: 0;
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                border: 1px none;
+            }
+            .tab-align-right .left-nav-button::after,
+            .tab-align-left .left-nav-button::after {
+                transform: rotateZ(90deg);
+            }
+            .tab-align-right .right-nav-button::after,
+            .tab-align-left .right-nav-button::after {
+                transform: rotateZ(90deg);
+            }
+            .tab-align-right > .tab-panel,
+            .tab-align-left > .tab-panel {
+                top: var(--header-height);
+                z-index: 1;
+            }
+
+            /** Right tabs CSS */
+            .tab-align-right .tab-bar {
+                right: 0;
+                left: auto;
+                height: auto;
+                border-left: 1px solid;
+            }
+            .tab-align-right > .tab-panel {
+                right: 125px;
+                left: 0;
+            }
+            .tab-align-right .tab-header {
+                margin-right: 0;
+                margin-left: 0;
+                z-index: 1;
+            }
+            .tab-align-right .tab-footer {
+                right: 0;
+                z-index: 1;
+            }
+            .tab-align-right .tabs > button.selected {
+                border-radius: 0px 5px 5px 0;
+                right: 1px;
+            }
+            /** Left tabs CSS */
+            .tab-align-left .tab-bar {
+                left: 0;
+                right: auto;
+                height: auto;
+                border-right: 1px solid;
+            }
+
+            .tab-align-left > .tab-panel {
+                left: var(--tab-width);
+                right: 0;
+            }
+            .tab-align-left .tab-header {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            .tab-align-left .tab-footer {
+                left: 0;
+            }
+            .tab-align-left .tabs > button.selected {
+                border-radius: 5px 0 0 5px;
+                left: 1px;
+            }
+
+            /** Bottom tabs CSS */
+            .tab-align-bottom .tab-bar {
+                position: absolute;
+                bottom: var(--footer-height);
+                top: auto;
+            }
+            .tab-align-bottom > .tab-panel {
+                bottom: var(--panel-bottom);
+                top: var(--header-height);
+            }
+
+            /**Theme CSS */
+            .tabview-container {
+                background-color: var(--container-bg);
+            }
+
+            .tab-bar {
+                background-color: var(--tab-bar-bg);
+            }
+            .tab-bar button {
+                /*background-color: rgb(4, 109, 109);
+                border-color: rgb(4, 56, 56);
+                color: white;*/
+            }
+            .tab-bar button:hover {
+                /*background-color: rgb(4, 56, 56);*/
+            }
+            .left-nav-button,
+            .right-nav-button {
+                color: var(--tab-color);
+                background-color: var(--tab-bar-bg);
+            }
+            .tab-panel {
+                background-color: var(--page-bg);
+                border-color: var(--page-border-color);
+                color: var(--page-color);
+                box-shadow: 1px 1px 1px 1px transparent;
+            }
+            .tab-page {
+                background-color: '';
+                color: '';
+                padding: 8px;
+            }
+            .tab-footer,
+            .tab-header {
+                background-color: var(--tab-footer-bg);
+                padding-left: 14px;
+                background-color: var(--tab-bar-bg);
+                color: teal;
+            }
+        `;
+            let styles = document.createElement('style');
+            styles.id = options.id || 'tabviewStyles';
+            styles.append(document.createTextNode(css));
+            document.head.appendChild(styles);
+        };
+    </script>
+    <body>
+        <div class="main">
+            <div
+                id="tabview-container"
+                class="tab-align-left rotate-tabs draggable"
+            >
+                <!--<div class="tab-header">Header: Programmable Tabs</div>-->
+                <div class="tabs">
+                    <button
+                        id="tab1"
+                        role="tab-button"
+                        closable="true"
+                        iconColor="red"
+                        icon=""
+                    >
+                        First tab
+                    </button>
+                    <button id="tab2" role="tab-button" closable="true" icon="">
+                        Second tab with longest name and clipped.
+                    </button>
+                    <button id="tab3" role="tab-button" closable="true" icon="">
+                        Third tab
+                    </button>
+                    <button id="tab4" role="tab-button" closable="true" icon="">
+                        Fourth tab
+                    </button>
+                    <button id="tab5" role="tab-button" closable="true" icon="">
+                        Fifth tab
+                    </button>
+                    <button id="tab6" role="tab-button" closable="true" icon="">
+                        Sixth tab
+                    </button>
+                </div>
+                <div class="tab-panel"></div>
+                <!--<div class="tab-footer">Footer: Copyright Ampani Inc 2021</div>-->
+            </div>
+        </div>
+    </body>
+</html>

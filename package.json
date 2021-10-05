@@ -1,10 +1,10 @@
 {
   "name": "tabview",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Scrollable tabs",
   "main": "dist/tabview.js",
   "umd:main": "dist/tabview.umd.js",
-  "module": "lib/tabview.modern.js",
+  "module": "index.js",
   "unpkg": "dist/tabview.umd.js",
   "source": "index.js",
   "files": [
@@ -15,7 +15,7 @@
     "build": "microbundle --name TabView -o dist -f umd",
     "build:dev": "microbundle --name TabView -o lib -f modern --no-compress",
     "dev": "microbundle --name TabView -o lib -f modern --no-compress --watch",
-    "serve": " browser-sync start --server --serveStatic demo --index demo/index.html -w -f .",
+    "serve": " browser-sync start --server --index demo2.html --serveStatic dist -w -f .",
     "start": "npm run build:dev && npm run serve",
     "lint": "eslint --fix .",
     "lint:fix": "eslint --fix ."

@@ -1,10 +1,12 @@
+// const { doc } = require('../rules-editor-desktop/src/database/db');
+// const { doc } = require('../rules-editor-desktop/src/database/db');
 const TabView = (function () {
     const randomId = () => {
         return Math.random().toString(36).slice(2);
     };
     const THEMES = {
         blue: {
-            contrastColor: 'blue',
+            contrastColor: 'red',
             tabBg: 'rgb(8, 118, 185)',
             tabColor: '#eee',
             tabBorderColor: '#2E4053',
@@ -19,11 +21,10 @@ const TabView = (function () {
             headerColor: '#eee',
             footerBg: 'rgb(8, 118, 185)',
             footerColor: '#eee',
-            footerBorderColor: '#2E4055',
             iconColor: 'red',
         },
         green: {
-            contrastColor: 'green',
+            contrastColor: 'red',
             tabBg: '#1D8348',
             tabColor: '#eee',
             tabBorderColor: '#104032',
@@ -38,30 +39,28 @@ const TabView = (function () {
             headerColor: '#eee',
             footerBg: '#1D8348',
             footerColor: '#eee',
-            footerBorderColor: '#104032',
             iconColor: 'red',
         },
         red: {
-            contrastColor: '#CD4435',
+            contrastColor: 'orange',
             tabBg: '#BA4335',
             tabColor: '#eee',
-            tabBorderColor: '#5A3400',
+            tabBorderColor: '#641E16',
             tabButtonBg: '#BA4335',
             hoverBg: '#CD4435',
             hoverColor: '#efefef',
             activeBg: '#CD0935',
             activeColor: '#fff',
-            pageBg: null,
-            pageColor: null,
+            pageBg: '',
+            pageColor: '',
             headerBg: '#BA4335',
             headerColor: '#eee',
             footerBg: '#BA4335',
             footerColor: '#eee',
-            footerBorderColor: '#5A3400',
             iconColor: '#00ff00',
         },
         orange: {
-            contrastColor: 'orange',
+            contrastColor: 'green',
             tabBg: '#D68910',
             tabColor: '#eee',
             tabBorderColor: '#784212',
@@ -76,14 +75,13 @@ const TabView = (function () {
             headerColor: '#eee',
             footerBg: '#D68910',
             footerColor: '#eee',
-            footerBorderColor: '#784212',
             iconColor: '#00ff00',
         },
         grey: {
-            contrastColor: '#efefef',
+            contrastColor: 'blue',
             tabBg: '#D0D3D4',
             tabColor: '#333',
-            tabBorderColor: '#333',
+            tabBorderColor: '#777',
             tabButtonBg: '#ECF0F1',
             hoverBg: '#FFFFFF',
             hoverColor: '#111',
@@ -95,14 +93,13 @@ const TabView = (function () {
             headerColor: '#333',
             footerBg: '#D0D3D4',
             footerColor: '#333',
-            footerBorderColor: '#222222',
             iconColor: '#00ff00',
         },
         dark: {
             contrastColor: '',
             tabBg: '#34495E',
             tabColor: '#eee',
-            tabBorderColor: '#233011',
+            tabBorderColor: '#333',
             tabButtonBg: '#474747',
             hoverBg: '#2C3E50',
             hoverColor: '#fff',
@@ -114,14 +111,13 @@ const TabView = (function () {
             headerColor: '#eee',
             footerBg: '#34495E ',
             footerColor: '#eee',
-            footerBorderColor: '#233011',
             iconColor: '#00ff00',
         },
         black: {
-            contrastColor: '',
+            contrastColor: 'red',
             tabBg: '#1C2833',
             tabColor: '#eee',
-            tabBorderColor: '#233011',
+            tabBorderColor: '#000',
             tabButtonBg: '#2C3E50',
             hoverBg: '#5D6D7E ',
             hoverColor: '#fff',
@@ -133,14 +129,13 @@ const TabView = (function () {
             headerColor: '#eee',
             footerBg: '#1C2833',
             footerColor: '#eee',
-            footerBorderColor: '#233011',
             iconColor: '#00ff00',
         },
         light: {
-            contrastColor: '',
+            contrastColor: 'blue',
             tabBg: 'lavender',
             tabColor: '#111',
-            tabBorderColor: '#233011',
+            tabBorderColor: '#789',
             tabButtonBg: 'lavender',
             hoverBg: '#AED6F1',
             hoverColor: '#000',
@@ -152,14 +147,13 @@ const TabView = (function () {
             headerColor: '#111',
             footerBg: 'lavender',
             footerColor: '#111',
-            footerBorderColor: '#233011',
             iconColor: 'green',
         },
         purple: {
-            contrastColor: '',
+            contrastColor: 'green',
             tabBg: '#9B59B6',
             tabColor: '#fff',
-            tabBorderColor: '#443974',
+            tabBorderColor: '#4A235A ',
             tabButtonBg: '#8E44AD',
             hoverBg: '#A569BD',
             hoverColor: '#fff',
@@ -171,7 +165,6 @@ const TabView = (function () {
             headerColor: '#fff',
             footerBg: '#9B59B6',
             footerColor: '#fff',
-            footerBorderColor: '#443974',
             iconColor: '#00ff00',
         },
     };
@@ -183,28 +176,28 @@ const TabView = (function () {
         maxTabWidth: 225,
         minTabWidth: 'auto',
         tabWidth: 125,
-        tabHeight: 52,
+        tabHeight: 42,
         footerHeight: 22,
         headerHeight: 24,
     };
     const THEME_SETTINGS = {
+        // contrast: true,
         contrastColor: '#efefef',
         tabBg: '#efefef',
-        tabColor: '#333',
-        tabBorderColor: '#ababab',
-        tabButtonBg: '#cdcdcd',
-        hoverBg: '#ffffff',
-        hoverColor: '#000000',
-        activeBg: '#777777',
-        activeColor: '#ffffff',
-        pageBg: '#eef',
-        pageColor: '#333',
+        tabColor: '',
+        tabBorderColor: '',
+        tabButtonBg: 'inherit',
+        hoverBg: '',
+        hoverColor: '',
+        activeBg: '',
+        activeColor: 'blue',
+        pageBg: '',
+        pageColor: '',
         headerBg: '#efefef',
-        headerColor: '#333',
-        footerBg: '#cdcdcd',
-        footerBorderColor: '#777777',
-        footerColor: '#333',
-        iconColor: 'green',
+        headerColor: '',
+        footerBg: '#efefef',
+        footerColor: '',
+        iconColor: '',
     };
     const removeCSS = (styleId) => {
         document.getElementById(styleId).remove();
@@ -252,7 +245,6 @@ const TabView = (function () {
     --header-color: ${s.headerColor};
     --footer-bg: ${s.footerBg};
     --footer-color: ${s.footerColor};
-    --footer-border-color: ${s.footerBorderColor};
     --page-bg: ${s.pageBg};
     --page-color: ${s.pageColor},
     --icon-color: ${s.iconColor},
@@ -304,9 +296,8 @@ const TabView = (function () {
     right: 0;
     bottom: 0;
     left: 0;
-    border-top: 1px solid var(--footer-border-color);
+    border-top: 1px solid;
     display: var(--display-footer);
-    z-index: 10;
 }
 
 #${containerId} .tab-bar {
@@ -444,7 +435,7 @@ const TabView = (function () {
     min-height: 0;
     max-height: 0;
     height: 0;
-    border-right: 8px solid var(--tab-color);
+    border-right: 8px solid var(--tab-color, '#333');
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
 }
@@ -456,7 +447,7 @@ const TabView = (function () {
     height: 0;
     min-height: 0;
     max-height: 0;
-    border-left: 8px solid var(--tab-color);
+    border-left: 8px solid var(--tab-color, '#333');
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
 }
@@ -521,10 +512,9 @@ const TabView = (function () {
     margin-right: 2px;
     cursor: pointer;
     border-right: 0 none transparent;
-    /* margin-top: calc(var(--tab-width) / 2 + 10px);
-       transform: rotateZ(-90deg) translateX(24px);
-       box-shadow: 1px 1px 2px 0px #ccc;
-    */
+    /*margin-top: calc(var(--tab-width) / 2 + 10px);
+    transform: rotateZ(-90deg) translateX(24px);
+    box-shadow: 1px 1px 2px 0px #ccc;*/
 }
 
 #${containerId}.tab-align-right .right-nav-button,
@@ -631,7 +621,7 @@ const TabView = (function () {
 /**Theme CSS */
 
 #${containerId} {
-    background-color: '';
+    background-color: var(--page-bg);
 }
 
 #${containerId} .tab-bar {
@@ -657,11 +647,12 @@ const TabView = (function () {
 }
 #${containerId} .tab-panel {
     border: none;
-    background: var(--page-bg);
     color: var(--page-color);
     box-shadow: 1px 1px 1px 1px transparent;
 }
-#${containerId} .tab-panel .tab-page {
+#${containerId} .tab-page {
+    background: '';
+    color: '';
     padding: 8px;
 }
 #${containerId} .tab-footer{
@@ -896,7 +887,7 @@ const TabView = (function () {
             options.align === 'left' || options.align === 'right'
                 ? true
                 : false;
-        let infiniteScroll = options.infiniteScroll || false;
+        let infiniteScroll = options.infiniteScroll || true;
         let activeTab = null;
         let tabBar = null; // container.querySelector('.tabs');
         let tabPanel = null;
@@ -1153,7 +1144,6 @@ const TabView = (function () {
                 if (infiniteScroll) {
                     allTabs[allTabs.length - 1].after(allTabs[0]);
                 } else {
-                    if (!last.nextElementSibling) return;
                     if (tabAlignSide) {
                         visibleTabs[0].style.marginTop =
                             '-' + visibleTabs[0].clientHeight + 'px';
@@ -1176,7 +1166,6 @@ const TabView = (function () {
                 if (infiniteScroll) {
                     first.before(visibleTabs[visibleTabs.length - 1]);
                 } else {
-                    if (!first.previousElementSibling) return;
                     if (tabAlignSide) {
                         if (first.previousElementSibling)
                             first.previousElementSibling.style.marginTop = 0;
@@ -1314,7 +1303,6 @@ const TabView = (function () {
     };
 })();
 export default TabView;
-
 /*const view = TabView.createTabs('tabview-container', {
     theme: 'green',
     header: false,
@@ -1328,18 +1316,3 @@ export default TabView;
     footerColor: 'blue',
 });*/
 // view.destroy();
-
-/*const view = TabView.createTabs('tabview-container', {
-    theme: 'green',
-    header: false,
-    footer: 'Copyright 2021 Ampani Inc',
-    header: '<b>Programmable Tabs</b>',
-    draggable: true,
-    contrastColor: 'red',
-    headerColor: '#eee',
-    headerBg: 'darkcyan',
-    footerBg: 'lavender',
-    footerColor: 'blue',
-});
-// view.destroy();
-*/
