@@ -1292,6 +1292,9 @@ const TabView = (function () {
         function getTab(id) {
             return tabs.find((t) => t.id === id);
         }
+        function getTabs() {
+            return tabs;
+        }
         // Event listeners
         const onSelect = (fn) => events.on('select', fn);
         const onClose = (fn) => events.on('close', fn);
@@ -1311,6 +1314,7 @@ const TabView = (function () {
             closeTab,
             selectTab,
             getTab,
+            getTabs,
             setHtml,
             setTextContent,
             setHeader,
