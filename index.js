@@ -1062,6 +1062,8 @@ const TabView = (function () {
         );
         const selectTab = debounce(
             (tabId) => {
+                let tab = tabs.find((t) => t.id === tabId);
+                if (tab) return;
                 // let currentTab = tabs.find((t) => t.active === true);
                 // if (currentTab) currentTab.active = false;
                 if (activeTab) {
@@ -1069,7 +1071,7 @@ const TabView = (function () {
                     activeTab.linkButton.classList.remove('active');
                     activeTab.active = false;
                 }
-                let tab = tabs.find((t) => t.id === tabId);
+
                 tab.active = true;
                 activeTab = tab;
                 selectButton(tab.linkButton.id);
@@ -1287,7 +1289,9 @@ const TabView = (function () {
         function setFooterText(text) {
             container.querySelector('.tab-footer').textContent = text;
         }
-
+        function getTab(id) {
+            return tabs.find((t) => t.id === id);
+        }
         // Event listeners
         const onSelect = (fn) => events.on('select', fn);
         const onClose = (fn) => events.on('close', fn);
@@ -1306,6 +1310,7 @@ const TabView = (function () {
             addTab,
             closeTab,
             selectTab,
+            getTab,
             setHtml,
             setTextContent,
             setHeader,
