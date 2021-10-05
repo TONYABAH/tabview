@@ -4,7 +4,7 @@
   "description": "Scrollable tabs",
   "main": "dist/tabview.js",
   "umd:main": "dist/tabview.umd.js",
-  "module": "index.js",
+  "module": "lib/tabview.modern.js.js",
   "unpkg": "dist/tabview.umd.js",
   "source": "index.js",
   "files": [

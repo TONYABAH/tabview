@@ -924,18 +924,11 @@ const TabView = (function () {
             switch (code) {
                 case 37: // left key
                 case 38: // up key
-                    if (link.previousSibling) {
-                        selectTab(
-                            link.previousSibling.getAttribute('data-tab')
-                        );
-                        //
-                    }
+                    scrollRight(e);
                     break;
                 case 39: // right key
                 case 40: // down key
-                    if (link.nextSibling) {
-                        selectTab(link.nextSibling.getAttribute('data-tab'));
-                    }
+                    scrollLeft(e);
                     break;
                 case 13: // enter key
                     break;
@@ -1164,7 +1157,7 @@ const TabView = (function () {
                 }
             }
             // scrollToView(tabBar, offsetX, offsetY);
-        }, 100);
+        }, 50);
         const scrollRight = debounce((e) => {
             // let offsetX = tabAlignSide ? 0 : getRightScrollOffset(tabBar);
             // let offsetY = tabAlignSide ? getBottomScrollOffset(tabBar) : 0;
@@ -1186,7 +1179,7 @@ const TabView = (function () {
                     }
                 }
             }
-        }, 100);
+        }, 50);
         function ensureMarkup() {
             let tabBarWrapper = document.createElement('div');
             let tabHeader = container.querySelector('.tab-header');
@@ -1274,43 +1267,55 @@ const TabView = (function () {
 
             let leftNavBtn = container.querySelector('.left-nav-button');
             leftNavBtn.addEventListener('click', (e) => scrollRight(e));
-            /*bar.addEventListener(
+
+            tabBar.addEventListener(
                 'keyup',
                 (event) => {
-                    handleKeypress(event, bar, selectTab);
+                    handleKeypress(event);
                 },
                 true
-            );*/
+            );
         }
         function destroy() {
             container.outerHTML = original;
             removeCSS(stylesId);
-            // container.replaceChildren(...original);
+            events.fire('destroy', null);
         }
-        function setTitle(title) {}
-        function setFooterText(text) {}
+        function setHeader(text) {
+            container.querySelector('.tab-header').textContent = text;
+        }
+        function setFooterText(text) {
+            container.querySelector('.tab-footer').textContent = text;
+        }
+
         // Event listeners
         const onSelect = (fn) => events.on('select', fn);
         const onClose = (fn) => events.on('close', fn);
         const onOpen = (fn) => events.on('open', fn);
+        const onDestroy = (fn) => events.on('destroy', fn);
+
         window.addEventListener('resize', scrollToActiveTab);
+
         init();
+
         return {
             onOpen,
             onSelect,
             onClose,
+            onDestroy,
             addTab,
             closeTab,
             selectTab,
             setHtml,
             setTextContent,
-            setTitle,
+            setHeader,
             setFooterText,
             destroy,
         };
     }
     return {
         createTabs,
+        debounce,
     };
 })();
 export default TabView;
