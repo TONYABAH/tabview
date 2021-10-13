@@ -1060,6 +1060,7 @@ const TabView = (function () {
         );
         const selectTab = debounce(
             (tabId) => {
+               
                 // let currentTab = tabs.find((t) => t.active === true);
                 // if (currentTab) currentTab.active = false;
                 if (activeTab) {

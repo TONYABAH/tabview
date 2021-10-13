@@ -33,8 +33,9 @@
             Tabview.createTabs('tabview-container', {
                 theme: 'green',
                 footer: 'Copyright 2021 Ampani Inc.',
-                minTabWidth: 'auto',
-                // align: 'left',
+                minTabWidth: '120',
+                tabPosition: '',
+                infiniteScroll: true,
             });
         </script>
     </head>
@@ -475,7 +476,8 @@
         <div class="main">
             <div
                 id="tabview-container"
-                class="tab-align-left rotate-tabs draggable"
+                class="tab-align-top rotate-tabs draggable"
+                sortableTabs="true"
             >
                 <!--<div class="tab-header">Header: Programmable Tabs</div>-->
                 <div class="tabs">

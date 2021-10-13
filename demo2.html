@@ -66,20 +66,21 @@
             }
         </style>
         <script type="module">
-            import Tabview from './lib/tabview.modern.js';
+            import Tabview from './index.js';
             // const container = document.getElementById('tabs');
             const addBtn = document.getElementById('addTab');
             const view = Tabview.createTabs('tabview', {
-                theme: '',
+                theme: 'blue',
                 draggable: true,
-                align: 'top',
-                minTabWidth: 125,
+                tabPosition: 'left',
+                minTabWidth: 'auto',
                 tabHeight: 36,
                 footer: 'Copyright 2021 Ampani Inc.',
+                sortable: true,
             });
             function add() {
                 let id = Math.random().toString(36).substr(2);
-                const tab = view.addTab(id, {
+                const tab = view.openTab(id, {
                     text: `${id}`,
                     labeL: 'Welcome ' + id,
                     closable: true,
@@ -97,7 +98,7 @@
             <h3>Tabview Demo</h3>
         </div>
         <div class="main">
-            <div id="tabview" class="tab-align-top rotate-tabs draggable">
+            <div id="tabview" class="tab-align- rotate-tabs draggable">
                 <!--<div class="tab-header">Header: Programmable Tabs</div>-->
                 <div class="tabs">
                     <button
@@ -133,7 +134,6 @@
             <!-- The flexible grid (content) -->
             <button id="addTab" class="addBtn">Add tab</button>
         </div>
-        <script type="module" src="demo.js"></script>
         <script id="__bs_script__">
             //<![CDATA[
             document.write(

@@ -2,192 +2,191 @@ const TabView = (function () {
     const randomId = () => {
         return Math.random().toString(36).slice(2);
     };
-    const THEMES = {
-        blue: {
-            contrastColor: 'blue',
-            tabBg: 'rgb(8, 118, 185)',
-            tabColor: '#eee',
-            tabBorderColor: '#2E4053',
-            tabButtonBg: 'rgb(8, 118, 185)',
-            hoverBg: 'rgb(8, 181, 250)',
-            hoverColor: '#efefef',
-            activeBg: 'rgb(8, 100, 190)',
-            activeColor: '#fff',
-            pageBg: '',
-            pageColor: '',
-            headerBg: 'rgb(8, 118, 185)',
-            headerColor: '#eee',
-            footerBg: 'rgb(8, 118, 185)',
-            footerColor: '#eee',
-            footerBorderColor: '#2E4055',
-            iconColor: 'red',
-        },
-        green: {
-            contrastColor: 'green',
-            tabBg: '#1D8348',
-            tabColor: '#eee',
-            tabBorderColor: '#104032',
-            tabButtonBg: '#1D8348',
-            hoverBg: '#2ECC71',
-            hoverColor: '#efefef',
-            activeBg: '#145A32',
-            activeColor: '#fff',
-            pageBg: '',
-            pageColor: '',
-            headerBg: '#1D8348',
-            headerColor: '#eee',
-            footerBg: '#1D8348',
-            footerColor: '#eee',
-            footerBorderColor: '#104032',
-            iconColor: 'red',
-        },
+    const COLORS = {
         red: {
-            contrastColor: '#CD4435',
-            tabBg: '#BA4335',
-            tabColor: '#eee',
-            tabBorderColor: '#5A3400',
-            tabButtonBg: '#BA4335',
-            hoverBg: '#CD4435',
-            hoverColor: '#efefef',
-            activeBg: '#CD0935',
-            activeColor: '#fff',
-            pageBg: null,
-            pageColor: null,
-            headerBg: '#BA4335',
-            headerColor: '#eee',
-            footerBg: '#BA4335',
-            footerColor: '#eee',
-            footerBorderColor: '#5A3400',
-            iconColor: '#00ff00',
+            50: '#ffebee',
+            400: '#ef5350',
+            500: '#f44336',
+            700: '#e53935',
+            800: '#d32f2f',
+            900: '#b71c1c',
         },
-        orange: {
-            contrastColor: 'orange',
-            tabBg: '#D68910',
-            tabColor: '#eee',
-            tabBorderColor: '#784212',
-            tabButtonBg: '#D68910',
-            hoverBg: '#FC7633',
-            hoverColor: '#efefef',
-            activeBg: '#FF8910',
-            activeColor: '#fff',
-            pageBg: '',
-            pageColor: '',
-            headerBg: '#D68910',
-            headerColor: '#eee',
-            footerBg: '#D68910',
-            footerColor: '#eee',
-            footerBorderColor: '#784212',
-            iconColor: '#00ff00',
-        },
-        grey: {
-            contrastColor: '#efefef',
-            tabBg: '#D0D3D4',
-            tabColor: '#333',
-            tabBorderColor: '#333',
-            tabButtonBg: '#ECF0F1',
-            hoverBg: '#FFFFFF',
-            hoverColor: '#111',
-            activeBg: '#D0D3D4',
-            activeColor: '#222',
-            pageBg: '',
-            pageColor: '',
-            headerBg: '#D0D3D4',
-            headerColor: '#333',
-            footerBg: '#D0D3D4',
-            footerColor: '#333',
-            footerBorderColor: '#222222',
-            iconColor: '#00ff00',
-        },
-        dark: {
-            contrastColor: '',
-            tabBg: '#34495E',
-            tabColor: '#eee',
-            tabBorderColor: '#233011',
-            tabButtonBg: '#474747',
-            hoverBg: '#2C3E50',
-            hoverColor: '#fff',
-            activeBg: '#566573 ',
-            activeColor: '#eee',
-            pageBg: '',
-            pageColor: '',
-            headerBg: '#34495E ',
-            headerColor: '#eee',
-            footerBg: '#34495E ',
-            footerColor: '#eee',
-            footerBorderColor: '#233011',
-            iconColor: '#00ff00',
-        },
-        black: {
-            contrastColor: '',
-            tabBg: '#1C2833',
-            tabColor: '#eee',
-            tabBorderColor: '#233011',
-            tabButtonBg: '#2C3E50',
-            hoverBg: '#5D6D7E ',
-            hoverColor: '#fff',
-            activeBg: '#1C2833',
-            activeColor: '#eee',
-            pageBg: '',
-            pageColor: '',
-            headerBg: '#1C2833',
-            headerColor: '#eee',
-            footerBg: '#1C2833',
-            footerColor: '#eee',
-            footerBorderColor: '#233011',
-            iconColor: '#00ff00',
-        },
-        light: {
-            contrastColor: '',
-            tabBg: 'lavender',
-            tabColor: '#111',
-            tabBorderColor: '#233011',
-            tabButtonBg: 'lavender',
-            hoverBg: '#AED6F1',
-            hoverColor: '#000',
-            activeBg: '#AED6F1',
-            activeColor: '#000',
-            pageBg: '',
-            pageColor: '',
-            headerBg: 'lavender',
-            headerColor: '#111',
-            footerBg: 'lavender',
-            footerColor: '#111',
-            footerBorderColor: '#233011',
-            iconColor: 'green',
+        pink: {
+            50: '#fce4ec',
+            400: '#ec407a',
+            500: '#e91e63',
+            700: '#c2185b',
+            800: '#ad1457',
+            900: '#880e4f',
         },
         purple: {
-            contrastColor: '',
-            tabBg: '#9B59B6',
-            tabColor: '#fff',
-            tabBorderColor: '#443974',
-            tabButtonBg: '#8E44AD',
-            hoverBg: '#A569BD',
-            hoverColor: '#fff',
-            activeBg: '#633974',
-            activeColor: '#eee',
-            pageBg: '',
-            pageColor: '',
-            headerBg: '#9B59B6',
-            headerColor: '#fff',
-            footerBg: '#9B59B6',
-            footerColor: '#fff',
-            footerBorderColor: '#443974',
-            iconColor: '#00ff00',
+            50: '#f3e5f5',
+            400: '#ab47bc',
+            500: '#9c27b0',
+            700: '#7b1fa2',
+            800: '#6a1b9a',
+            900: '#4a148c',
+        },
+        deeppurple: {
+            50: '#ede7f6',
+            400: '#7e57c2',
+            500: '#673ab7',
+            700: '#512da8',
+            800: '#4527a0',
+            900: '#311b92',
+        },
+        indigo: {
+            50: '#e8eaf6',
+            400: '#5c6bc0',
+            500: '#3f51b5',
+            700: '#303f9f',
+            800: '#283593',
+            900: '#1a237e',
+        },
+        blue: {
+            50: '#e3f2fd',
+            400: '#42a5f5',
+            500: '#2196f3',
+            700: '#1976d2',
+            800: '#1565c0',
+            900: '#0d47a1',
+        },
+        green: {
+            50: '#c8e6c9',
+            400: '#66bb6a',
+            500: '#4caf50',
+            700: '#388e3c',
+            800: '#2e7d32',
+            900: '#1b5e20',
+        },
+        cyan: {
+            50: '#efefef',
+            400: '#26c6da',
+            500: '#00acc1',
+            700: '#229fa7',
+            800: '#0097a7',
+            900: '#006064',
+        },
+        teal: {
+            50: '#26a69a',
+            400: '#229f88',
+            500: '#009688',
+            700: '#00796b',
+            800: '#00695c',
+            900: '#004d40',
+        },
+        green: {
+            50: '#e0f2f1',
+            400: '#66bb6a',
+            500: '#4caf50',
+            700: '#388e3c',
+            800: '#2e7d32',
+            900: '#1b5e20',
+        },
+        amber: {
+            50: '#fff8e1',
+            400: '#ffca28',
+            500: '#ffc107',
+            700: '#ffa000',
+            800: '#ff8f00',
+            900: '#ff6f00',
+        },
+        orange: {
+            50: '#fff3e0',
+            400: '#ffa726',
+            500: '#ff9800',
+            700: '#f57c00',
+            800: '#ef6c00',
+            900: '#e65100',
+        },
+        deeporange: {
+            50: '#fbe9e7',
+            400: '#ff7043',
+            500: '#ff5722',
+            700: '#e64a19',
+            800: '#d84315',
+            900: '#bf360c',
+        },
+        brown: {
+            50: '#efebe9',
+            400: '#8d6e63',
+            500: '#795548',
+            700: '#5d4037',
+            800: '#4e342e',
+            900: '#3e2723',
+        },
+        grey: {
+            50: '#ffffff',
+            400: '#bdbdbd',
+            500: '#9e9e9e',
+            700: '#757575',
+            800: '#646464',
+            900: '#424242',
+        },
+        darkgrey: {
+            50: '#fafafa',
+            400: '#616161',
+            500: '#424242',
+            700: '#323232',
+            800: '#212121',
+            900: '#111111',
+        },
+        lightgrey: {
+            50: '#000000',
+            400: '#fafafa',
+            500: '#f5f5f5',
+            700: '#fefefe',
+            800: '#ffffff',
+            900: '#bcbcbc',
+        },
+        bluegrey: {
+            50: '#eceff1',
+            400: '#f5f5f5',
+            500: '#607d8b',
+            700: '#455a64',
+            800: '#37474f',
+            900: '#263238',
         },
     };
-    const LAYOUT_SETTINGS = {
+    const getTheme = (theme) => {
+        let name = theme ? theme.toLowerCase() : 'lightgrey';
+        let color = COLORS[name] || COLORS.lightgrey;
+        return {
+            contrastColor: color[400],
+            tabBg: color[800],
+            tabColor: color[50],
+            tabBorderColor: color[900],
+            tabButtonBg: color[700],
+            hoverBg: color[500],
+            hoverColor: color[100],
+            activeBg: color[800],
+            activeColor: color[50],
+            pageBg: '',
+            pageColor: '',
+            headerBg: color[700],
+            headerColor: color[50],
+            footerBg: color[700],
+            footerColor: color[50],
+            footerBorderColor: color[900],
+            iconColor: color[50],
+        };
+    };
+    const DEFAULT_LAYOUT_SETTINGS = {
         header: false,
         footer: true,
         alginTab: 'top',
-        minTabHeight: 'auto',
+        minTabHeight: 16,
         maxTabWidth: 225,
         minTabWidth: 'auto',
         tabWidth: 125,
         tabHeight: 52,
         footerHeight: 22,
         headerHeight: 24,
+        footerFontSize: 11,
+        headerFontSize: 14,
+        tabFontSize: 13,
     };
-    const THEME_SETTINGS = {
+    const DEFAULT_THEME_SETTINGS = {
         contrastColor: '#efefef',
         tabBg: '#efefef',
         tabColor: '#333',
@@ -197,8 +196,8 @@ const TabView = (function () {
         hoverColor: '#000000',
         activeBg: '#777777',
         activeColor: '#ffffff',
-        pageBg: '#eef',
-        pageColor: '#333',
+        pageBg: '',
+        pageColor: '',
         headerBg: '#efefef',
         headerColor: '#333',
         footerBg: '#cdcdcd',
@@ -209,19 +208,30 @@ const TabView = (function () {
     const removeCSS = (styleId) => {
         document.getElementById(styleId).remove();
     };
-    const addCSS = (containerId, options = {}) => {
-        Object.assign(LAYOUT_SETTINGS, options);
+    const addCSS = (containerId, stylesId, options = {}) => {
+        Object.assign(DEFAULT_LAYOUT_SETTINGS, options);
         if (typeof options.theme === 'string') {
-            let theme = THEMES[options.theme];
-            Object.assign(THEME_SETTINGS, theme);
-        } else if (typeof options.theme === 'object') {
-            Object.assign(THEME_SETTINGS, options);
+            let theme = getTheme(options.theme); // THEMES[options.theme] || {};
+            Object.assign(DEFAULT_THEME_SETTINGS, theme);
         }
-        const s = Object.assign(THEME_SETTINGS, LAYOUT_SETTINGS);
-
+        const s = Object.assign(
+            DEFAULT_THEME_SETTINGS,
+            DEFAULT_LAYOUT_SETTINGS,
+            options
+        );
+        // const s = Object.assign(THEME_SETTINGS, LAYOUT_SETTINGS);
         const footerHeight = s.footer ? s.footerHeight : 0;
         const headerHeight = s.header ? s.headerHeight : 0;
-
+        const panelTop =
+            options.tabPosition !== 'left' &&
+            options.tabPosition !== 'right' &&
+            options.tabPosition !== 'bottom'
+                ? headerHeight + s.tabHeight
+                : headerHeight;
+        const panelBottom =
+            options.tabPosition === 'bottom'
+                ? footerHeight + s.tabHeight
+                : footerHeight;
         const css = `
     #${containerId} {
         
@@ -234,9 +244,11 @@ const TabView = (function () {
     --tab-height: ${s.tabHeight}px;
     --footer-height: ${footerHeight}px;
     --header-height: ${headerHeight}px;
-    --panel-top: ${headerHeight + s.tabHeight + 1}px;
-    --panel-bottom: var(--footer-height);
-
+    --panel-top: ${panelTop}px;
+    --panel-bottom: ${panelBottom}px;
+    --footer-font-size: ${s.footerFontSize}px;
+    --header-font-size: ${s.headerFontSize}px;
+    --tab-font-size: ${s.tabFontSize}px;
     --tab-bar-bg: ${s.tabBg};
     --tab-bar-contrast-bg: ${s.contrastColor};
     --tab-color: ${s.tabColor};
@@ -254,8 +266,8 @@ const TabView = (function () {
     --footer-color: ${s.footerColor};
     --footer-border-color: ${s.footerBorderColor};
     --page-bg: ${s.pageBg};
-    --page-color: ${s.pageColor},
-    --icon-color: ${s.iconColor},
+    --page-color: ${s.pageColor};
+    --icon-color: ${s.iconColor};
 }
 
 /**Layout CSS **/
@@ -274,17 +286,19 @@ const TabView = (function () {
     position: absolute;
     display: block;
     top: var(--panel-top);
-    bottom: var(--footer-height);
+    bottom: var(--panel-bottom);
     right: 0;
     left: 0;
+    padding: 0;
+    border: 0;
     z-index: 10;
-    background: #333;
+
 }
 #${containerId} .tab-panel .tab-page {
     position: absolute;
     display: none;
-    top: 5px;
-    bottom: 1px;
+    top: 0px;
+    bottom: 0px;
     right: 0px;
     left: 0px;
 }
@@ -296,6 +310,7 @@ const TabView = (function () {
     padding-left: 14px;
     display: var(--display-header);
     border-bottom: 1px solid var(--tab-border-color);
+    font-size: var(--header-font-size);
 }
 
 #${containerId} .tab-footer {
@@ -306,7 +321,8 @@ const TabView = (function () {
     left: 0;
     border-top: 1px solid var(--footer-border-color);
     display: var(--display-footer);
-    z-index: 10;
+    z-index: 1;
+    font-size: var(--footer-font-size);
 }
 
 #${containerId} .tab-bar {
@@ -317,12 +333,11 @@ const TabView = (function () {
     max-width: 100%;
     left: 0px;
     right: 0px;
-    /*box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.15);*/
-    border-bottom: 1px solid var(--tab-border-color);
     overflow: auto;
-    display: flex;
+    display: block;
     white-space: nowrap;
     z-index: 1;
+    border: 1px solid var(--tab-border-color);
 }
 #${containerId} .tabs {
     position: absolute;
@@ -332,28 +347,29 @@ const TabView = (function () {
     overflow: hidden;
     display: flex;
     white-space: nowrap;
-    background: var(--tab-bar-contrast-bg);
 }
 #${containerId} .tabs > button {
     position: relative;
-    display: block;
+    display: flex;
     min-height: 100%;
     max-width: var(--max-tab-width);
     min-width: var(--min-tab-width);
     width: auto;
     padding-left: 20px;
-    padding-right: 24px;
+    padding-right: 32px;
     background: inherit;
-    border: none;
     cursor: pointer;
     align-items: center;
+    justify-content: left;
     margin: 0px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    transition: .4s;
-    border-right: 1px inset;
-    /*box-shadow: 1px 1px 2px 0 #eee;*/
+    transition: .6s;
+    border: 0;
+    /*border-left: 1px solid var(--tab-border-color);*/
+    border-right: 1px solid var(--tab-border-color);
+    font-size: var(--tab-font-size);
 }
 
 #${containerId} .tabs > button:hover {
@@ -388,29 +404,33 @@ const TabView = (function () {
     display: block;
 }
 #${containerId} .tab-icon {
-    margin-top: -3px;
+    margin-top: 0px;
     float:left;
     color: var(--icon-color);
+    background: inherit;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    padding-left: 4px;
+    padding-right: 4px;
+    left: 2px
 }
 #${containerId} .tabs > button > .close-button:hover::after {
     color: red;
     background: #eee;
 }
 #${containerId} .tabs > button > .tab-label {
+    position: absolute;
     display: flex;
-    left: 22px;
-    right: 24px;
+    left: 16px;
+    right: 22px;
     height: 100%;
-    min-width: 45%;
-    margin-top: 50%;
-    transform: translateY(-50%);
     align-items: center;
     overflow: hidden;
     white-space: nowrap;
     text-shadow: transparent;
     text-overflow: ellipsis;
-    align-items: center;
-    background-color: green;
+    /*background-color: green;*/
     font-size: 11px;
     letter-spacing: 1px;
 }
@@ -427,7 +447,6 @@ const TabView = (function () {
     display: flex;
     align-items: center;
     justify-content: center;
-    /*text-shadow: 1px 1px #333;*/
     text-align: center;
     z-index: 0;
 }
@@ -520,11 +539,8 @@ const TabView = (function () {
     height: var(--tab-height);
     margin-right: 2px;
     cursor: pointer;
-    border-right: 0 none transparent;
-    /* margin-top: calc(var(--tab-width) / 2 + 10px);
-       transform: rotateZ(-90deg) translateX(24px);
-       box-shadow: 1px 1px 2px 0px #ccc;
-    */
+    /*border-top: 1px solid var(--tab-border-color);*/
+    border-bottom: 1px solid var(--tab-border-color);
 }
 
 #${containerId}.tab-align-right .right-nav-button,
@@ -624,8 +640,8 @@ const TabView = (function () {
     right: 1px;
 }
 #${containerId}.tab-align-bottom > .tab-panel {
-    bottom: var(--panel-bottom);
-    top: var(--header-height);
+    /*bottom: var(--panel-bottom);*/
+    /*top: var(--header-height);*/
 }
 
 /**Theme CSS */
@@ -638,16 +654,15 @@ const TabView = (function () {
     background-color: var(--tab-bar-bg);
     color: var(--tab-color);
 }
-#${containerId} .tab-bar button {
+#${containerId} .tab-bar > .tabs button {
     background-color: var(--tab-button-bg);
     color: var(--tab-color);
-    border-right: 1px solid var(--tab-border-color);
 }
-#${containerId} .tab-bar button:hover {
+#${containerId} .tab-bar > .tabs > button:hover {
     background-color: var(--hover-bg);
     color: var(--hover-color);
 }
-#${containerId} .tab-bar button.active {
+#${containerId} .tab-bar > .tabs > button.active {
     background-color: var(--active-bg);
     color: var(--active-color);
 }
@@ -656,10 +671,8 @@ const TabView = (function () {
     background-color: var(--tab-bar-bg);
 }
 #${containerId} .tab-panel {
-    border: none;
     background: var(--page-bg);
     color: var(--page-color);
-    box-shadow: 1px 1px 1px 1px transparent;
 }
 #${containerId} .tab-panel .tab-page {
     padding: 8px;
@@ -674,10 +687,10 @@ const TabView = (function () {
     background-color: var(--header-bg);
     color: var(--header-color);
     padding-left: 14px;
-}
-        `;
+}`;
+
         let styles = document.createElement('style');
-        styles.id = options.stylesId || 'tabviewStyles';
+        styles.id = stylesId || 'tabviewStyles';
         styles.append(document.createTextNode(css));
         document.head.appendChild(styles);
         return styles.id;
@@ -693,6 +706,7 @@ const TabView = (function () {
                     bubbles: bubbles || false,
                 });
                 cntx.dispatchEvent(myEvent);
+                return myEvent;
             },
             on(event, listener, context) {
                 const cntx = context || document;
@@ -861,11 +875,11 @@ const TabView = (function () {
         btn.setAttribute('role', 'tab-icon');
         btn.classList.add('tab-icon');
         btn.style.position = 'absolute';
-        btn.style.left = '4px';
+        // btn.style.left = '4px';
         // btn.style.top = '50%';
         btn.style.color = iconColor || '';
         // btn.style.transform = 'translateY(-50%)';
-        btn.textContent = icon || '❖';
+        btn.textContent = icon || '|' || '❖';
         return btn;
     }
 
@@ -877,44 +891,63 @@ const TabView = (function () {
         page.append(content || '');
         return page;
     }
-    function createTabs(
-        containerId,
-        options = {
-            footer: true,
-            header: false,
-            headerHeight: 32,
-            footerHeight: 25,
-            align: '',
-            iconColor: 'orange',
+    function getSettings(container, options) {
+        const settings = {};
+        Object.entries(options).forEach((entry) => {
+            let key = entry[0];
+            let val = entry[1];
+            let attrib = container.getAttribute(key);
+            settings[key] = attrib ? attrib : val;
+        });
+
+        /*const setting = {
+            header: options.header,
+            footer: options.footer,
+            alginTab: options.align || container.getAttribute('tabPosition'),
+            minTabHeight:
+                options.minTabHeight || container.getAttribute('minTabHeight'),
+            maxTabWidth:
+                options.maxTabWidth || container.getAttribute('maxTabWidth'),
+            minTabWidth:
+                options.minTabWidth || container.getAttribute('minTabWidth'),
+            tabWidth: options.tabWidth || container.getAttribute('tabWidth'),
+            tabHeight: options.tabHeight || container.getAttribute('tabHeight'),
+            footerHeight:
+                options.footerHeight || container.getAttribute('footerHeight'),
+            headerHeight:
+                options.minTabWidth || container.getAttribute('minTabWidth'),
             infiniteScroll: true,
-        }
-    ) {
-        let accumulator = 0;
-        const tabs = [];
+        };*/
+        return settings;
+    }
+    function createTabs(containerId, options) {
+        // let accumulator = 0;
+        const container = document.getElementById(containerId);
+        const original = container.outerHTML;
         const events = Emitter();
-        let tabAlignSide =
-            options.align === 'left' || options.align === 'right'
-                ? true
-                : false;
-        let infiniteScroll = options.infiniteScroll || false;
+        const tabs = [];
+        const draggable =
+            options.sortable || container.getAttribute('sortableTabs');
+        const align =
+            options.tabPosition || container.getAttribute('tabPosition');
+        const tabAlignSide =
+            align === 'left' || align === 'right' ? true : false;
+        const infiniteScroll =
+            options.infiniteScroll || container.getAttribute('infiniteScroll');
+
+        if (align) {
+            if (!container.classList.contains('tab-align-' + align)) {
+                container.classList.add('tab-align-' + align);
+            }
+        }
+        // delete options.tabPosition;
+        delete options.sortable;
+        const settings = getSettings(container, options);
+        let stylesId = 'tab_css_' + containerId;
+        stylesId = addCSS(containerId, stylesId, settings);
         let activeTab = null;
         let tabBar = null; // container.querySelector('.tabs');
         let tabPanel = null;
-        // let tabs = tabBar.querySelector('.tabs');
-        let container = document.getElementById(containerId);
-        let original = container.outerHTML;
-        if (container.classList.contains('infinit-scroll')) {
-            infiniteScroll = true;
-        }
-        if (
-            container.classList.contains('tab-align-right') ||
-            container.classList.contains('tab-align-left')
-        ) {
-            tabAlignSide = true;
-        }
-        options.stylesId = 'tab_css_' + containerId;
-        container.classList.add('tab-align-' + options.align);
-        let stylesId = addCSS(containerId, options);
 
         function handleKeypress(e) {
             const code = e.keyCode;
@@ -941,12 +974,12 @@ const TabView = (function () {
             var { text, title, closable, icon, iconcolor } = options;
             title = title || text;
             // let closable = tab.closable;
-            icon = icon || '❖';
+            icon = icon || '|' || '❖';
             let btn = document.createElement('button');
-            btn.setAttribute('id', id);
-            btn.setAttribute('data-target', 'page-' + id);
+            btn.setAttribute('id', 'tabview-btn' + id);
+            btn.setAttribute('data-target', 'tabview-page-' + id);
             btn.setAttribute('data-tab', id);
-            btn.setAttribute('draggable', true);
+            btn.setAttribute('draggable', draggable);
             btn.setAttribute('title', title || text);
             btn.setAttribute('role', 'tab-button');
             // const label = createLabel(text);
@@ -962,27 +995,34 @@ const TabView = (function () {
                     (event) => {
                         event.preventDefault();
                         event.stopPropagation();
+
                         let tabButton = event.target.parentNode;
                         closeTab(tabButton.getAttribute('data-tab'));
                     },
-                    true
+                    false
                 );
                 btn.appendChild(closeBtn);
             }
 
             btn.addEventListener(
                 'click',
-                (e) => selectTab(btn.getAttribute('data-tab')),
-                true
+                (event) => {
+                    event.preventDefault();
+                    selectTab(btn.getAttribute('data-tab'));
+                },
+                false
             );
-            if (container.classList.contains('draggable')) {
+            if (draggable) {
                 btn.addEventListener('drop', dnd.drop, true);
                 btn.addEventListener('dragover', dnd.allowDrop, true);
                 btn.addEventListener('dragstart', dnd.drag);
             }
             return btn;
         }
-        function addTab(tabId, options = { attributes: [], iconColor: 'red' }) {
+        function openTab(
+            tabId,
+            options = { attributes: [], iconColor: 'red' }
+        ) {
             const btn = createButton(tabId, options);
             const pageId = btn.getAttribute('data-target');
             const vpage = createPage(pageId, options.content);
@@ -995,11 +1035,10 @@ const TabView = (function () {
             tab.options = options;
             tabs.push(tab);
             tabPanel.appendChild(vpage);
-            // let selectedTab = tabs.find((t) => t.active === true);
             if (activeTab) {
                 activeTab.linkButton.after(btn);
             } else {
-                tabBar.appendChild(btn);
+                tabBar.appendChild(tab.linkButton);
             }
             selectTab(tabId);
             return tab;
@@ -1027,61 +1066,64 @@ const TabView = (function () {
             delete options.attributes;
             tab.options = options;
             tabs.push(tab);
-            // tab.onClick = (fn) => btn.addEventListener('click', fn);
-            // delete tab.attributes;
-            // selectTab(tab.id);
             return tab;
         }
         const closeTab = debounce(
             (tabId) => {
-                // event.preventDefault();
-                // event.stopPropagation();
                 let tab = tabs.find((t) => t.id === tabId);
                 if (!tab) return;
-                let tabButton = tab.linkButton;
-                let pageId = tabButton.getAttribute('data-target');
+                let ce = events.fire('before-tab-close', tab, tabBar);
+                if (ce.defaultPrevented) {
+                    return;
+                }
                 let nextButtonId = null;
-                if (tabButton.nextElementSibling) {
+                if (tab.linkButton.nextElementSibling) {
                     nextButtonId =
-                        tabButton.nextElementSibling.getAttribute('data-tab');
-                } else if (tabButton.previousElementSibling) {
+                        tab.linkButton.nextElementSibling.getAttribute(
+                            'data-tab'
+                        );
+                } else if (tab.linkButton.previousElementSibling) {
                     nextButtonId =
-                        tabButton.previousElementSibling.getAttribute(
+                        tab.linkButton.previousElementSibling.getAttribute(
                             'data-tab'
                         );
                 }
-                document.getElementById(pageId).remove();
-                tabButton.remove();
+                tab.tabPage.remove();
+                tab.linkButton.remove();
+
                 selectTab(nextButtonId);
                 let index = tabs.findIndex((t) => t.id === tabId);
                 tabs.splice(index, 1);
-                events.fire('close', tab);
+                events.fire('tab-close', tab, tabBar);
             },
             250,
             true
         );
-        const selectTab = debounce(
-            (tabId) => {
-                let tab = tabs.find((t) => t.id === tabId);
-                if (tab) return;
-                // let currentTab = tabs.find((t) => t.active === true);
-                // if (currentTab) currentTab.active = false;
-                if (activeTab) {
-                    activeTab.tabPage.style.display = 'none';
-                    activeTab.linkButton.classList.remove('active');
-                    activeTab.active = false;
-                }
+        const selectTab = (tabId) => {
+            let tab = tabs.find((t) => t.id === tabId);
+            if (!tab) return;
+            let ce = events.fire(
+                'before-tab-select',
+                {
+                    oldTab: activeTab,
+                    newTab: tab,
+                },
+                tabBar
+            );
+            if (ce.defaultPrevented) return;
+            if (activeTab) {
+                activeTab.tabPage.style.display = 'none';
+                activeTab.linkButton.classList.remove('active');
+                activeTab.active = false;
+            }
 
-                tab.active = true;
-                activeTab = tab;
-                selectButton(tab.linkButton.id);
-                selectPage(tab.tabPage.id);
-                events.fire('select', tab);
-                // tab.select();
-            },
-            250,
-            true
-        );
+            tab.active = true;
+            activeTab = tab;
+            selectButton(tab.linkButton.id);
+            selectPage(tab.tabPage.id);
+            events.fire('tab-select', tab, tabBar);
+            // tab.select();
+        };
         function setTextContent(tabId, content) {
             let tab = tabs.find((t) => t.id === tabId);
             let linkButton = tab.linkButton;
@@ -1281,7 +1323,7 @@ const TabView = (function () {
         function destroy() {
             container.outerHTML = original;
             removeCSS(stylesId);
-            events.fire('destroy', null);
+            events.fire('tab-destroy', container, container);
         }
         function setHeader(text) {
             container.querySelector('.tab-header').textContent = text;
@@ -1296,21 +1338,24 @@ const TabView = (function () {
             return tabs;
         }
         // Event listeners
-        const onSelect = (fn) => events.on('select', fn);
-        const onClose = (fn) => events.on('close', fn);
-        const onOpen = (fn) => events.on('open', fn);
-        const onDestroy = (fn) => events.on('destroy', fn);
+        const onSelect = (fn) => events.on('tab-select', fn, tabBar);
+        const onBeforeSelect = (fn) =>
+            events.on('before-tab-select', fn, tabBar);
+        const onClose = (fn) => events.on('tab-close', fn, tabBar);
+        const onBeforeClose = (fn) => events.on('before-tab-close', fn, tabBar);
+        const onDestroy = (fn) => events.on('tab-destroy', fn, container);
 
         window.addEventListener('resize', scrollToActiveTab);
 
         init();
 
         return {
-            onOpen,
             onSelect,
+            onBeforeSelect,
             onClose,
+            onBeforeClose,
             onDestroy,
-            addTab,
+            openTab,
             closeTab,
             selectTab,
             getTab,
@@ -1320,6 +1365,7 @@ const TabView = (function () {
             setHeader,
             setFooterText,
             destroy,
+            COLORS,
         };
     }
     return {
@@ -1328,20 +1374,6 @@ const TabView = (function () {
     };
 })();
 export default TabView;
-
-/*const view = TabView.createTabs('tabview-container', {
-    theme: 'green',
-    header: false,
-    footer: 'Copyright 2021 Ampani Inc',
-    header: '<b>Programmable Tabs</b>',
-    draggable: true,
-    contrastColor: 'red',
-    headerColor: '#eee',
-    headerBg: 'darkcyan',
-    footerBg: 'lavender',
-    footerColor: 'blue',
-});*/
-// view.destroy();
 
 /*const view = TabView.createTabs('tabview-container', {
     theme: 'green',
