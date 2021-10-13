@@ -185,6 +185,7 @@ const TabView = (function () {
         footerFontSize: 11,
         headerFontSize: 14,
         tabFontSize: 13,
+        tabContentAlign: 'left',
     };
     const DEFAULT_THEME_SETTINGS = {
         contrastColor: '#efefef',
@@ -220,6 +221,7 @@ const TabView = (function () {
             options
         );
         // const s = Object.assign(THEME_SETTINGS, LAYOUT_SETTINGS);
+        const tabContentAlign = options.textAlign || 'left';
         const footerHeight = s.footer ? s.footerHeight : 0;
         const headerHeight = s.header ? s.headerHeight : 0;
         const panelTop =
@@ -248,6 +250,7 @@ const TabView = (function () {
     --panel-bottom: ${panelBottom}px;
     --footer-font-size: ${s.footerFontSize}px;
     --header-font-size: ${s.headerFontSize}px;
+    --tab-content-align: ${tabContentAlign},
     --tab-font-size: ${s.tabFontSize}px;
     --tab-bar-bg: ${s.tabBg};
     --tab-bar-contrast-bg: ${s.contrastColor};
@@ -306,10 +309,10 @@ const TabView = (function () {
     position: absolute;
     right: 0;
     left: 0;
-    height: calc(var(--header-height) - 1px );
+    height: var(--header-height);
     padding-left: 14px;
     display: var(--display-header);
-    border-bottom: 1px solid var(--tab-border-color);
+    /*border-bottom: 1px solid var(--tab-border-color);*/
     font-size: var(--header-font-size);
 }
 
@@ -360,7 +363,7 @@ const TabView = (function () {
     background: inherit;
     cursor: pointer;
     align-items: center;
-    justify-content: left;
+    justify-content: var(--tab-content-align);
     margin: 0px;
     overflow: hidden;
     white-space: nowrap;
@@ -389,12 +392,14 @@ const TabView = (function () {
     display: flex;
     align-items: center;
     background: inherit;
+    font-size: 12px;
 }
 #${containerId} .tabs > button > .close-button::after {
     content: '✖';
     border-radius: 50%;
     line-height: 12px;
-    padding: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
     display: none;
 }
 #${containerId} .tabs > button.active .close-button::after {
@@ -879,7 +884,7 @@ const TabView = (function () {
         // btn.style.top = '50%';
         btn.style.color = iconColor || '';
         // btn.style.transform = 'translateY(-50%)';
-        btn.textContent = icon || '|' || '❖';
+        btn.textContent = icon; //|| '|' || '❖';
         return btn;
     }
 
@@ -974,7 +979,7 @@ const TabView = (function () {
             var { text, title, closable, icon, iconcolor } = options;
             title = title || text;
             // let closable = tab.closable;
-            icon = icon || '|' || '❖';
+            icon = icon === true ? '|' : icon;
             let btn = document.createElement('button');
             btn.setAttribute('id', 'tabview-btn' + id);
             btn.setAttribute('data-target', 'tabview-page-' + id);
@@ -1038,7 +1043,7 @@ const TabView = (function () {
             if (activeTab) {
                 activeTab.linkButton.after(btn);
             } else {
-                tabBar.appendChild(tab.linkButton);
+                tabBar.prepend(btn);
             }
             selectTab(tabId);
             return tab;
@@ -1088,12 +1093,18 @@ const TabView = (function () {
                             'data-tab'
                         );
                 }
-                tab.tabPage.remove();
-                tab.linkButton.remove();
 
-                selectTab(nextButtonId);
+                tab.linkButton.remove();
+                tab.tabPage.remove();
+                if (activeTab.id === tab.id) {
+                    activeTab = null;
+                }
+                // document.getElementById(tab.tabPage.id).remove();
+                // document.getElementById(tab.linkButton.id).remove();
+                if (nextButtonId) selectTab(nextButtonId);
                 let index = tabs.findIndex((t) => t.id === tabId);
                 tabs.splice(index, 1);
+
                 events.fire('tab-close', tab, tabBar);
             },
             250,
@@ -1365,12 +1376,12 @@ const TabView = (function () {
             setHeader,
             setFooterText,
             destroy,
-            COLORS,
         };
     }
     return {
         createTabs,
         debounce,
+        COLORS,
     };
 })();
 export default TabView;
