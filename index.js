@@ -210,7 +210,7 @@ const TabView = (function () {
         document.getElementById(styleId).remove();
     };
     const addCSS = (containerId, stylesId, options = {}) => {
-        Object.assign(DEFAULT_LAYOUT_SETTINGS, options);
+        // Object.assign(DEFAULT_LAYOUT_SETTINGS, options);
         if (typeof options.theme === 'string') {
             let theme = getTheme(options.theme); // THEMES[options.theme] || {};
             Object.assign(DEFAULT_THEME_SETTINGS, theme);
@@ -250,7 +250,7 @@ const TabView = (function () {
     --panel-bottom: ${panelBottom}px;
     --footer-font-size: ${s.footerFontSize}px;
     --header-font-size: ${s.headerFontSize}px;
-    --tab-content-align: ${tabContentAlign},
+    --tab-content-align: ${tabContentAlign};
     --tab-font-size: ${s.tabFontSize}px;
     --tab-bar-bg: ${s.tabBg};
     --tab-bar-contrast-bg: ${s.contrastColor};
@@ -418,7 +418,7 @@ const TabView = (function () {
     display: flex;
     padding-left: 4px;
     padding-right: 4px;
-    left: 2px
+    left: 2px;
 }
 #${containerId} .tabs > button > .close-button:hover::after {
     color: red;
@@ -436,7 +436,7 @@ const TabView = (function () {
     text-shadow: transparent;
     text-overflow: ellipsis;
     /*background-color: green;*/
-    font-size: 11px;
+    font-size: inherit;
     letter-spacing: 1px;
 }
 
@@ -1339,7 +1339,7 @@ const TabView = (function () {
         function setHeader(text) {
             container.querySelector('.tab-header').textContent = text;
         }
-        function setFooterText(text) {
+        function setFooter(text) {
             container.querySelector('.tab-footer').textContent = text;
         }
         function getTab(id) {
@@ -1374,7 +1374,7 @@ const TabView = (function () {
             setHtml,
             setTextContent,
             setHeader,
-            setFooterText,
+            setFooter,
             destroy,
         };
     }
